@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800" prefWidth="1280"
+            style="-fx-background-color:#FBF8F3;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.TableauBordAdminControleur">
+
+   <!-- BARRE DE NAVIGATION SUPÉRIEURE PRESTIGE -->
+   <top>
+      <HBox alignment="CENTER_LEFT" spacing="14" minHeight="56" prefHeight="56"
+            style="-fx-background-color:#3D261A; -fx-padding:0 22; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 8, 0, 0, 2);">
+         
+         <ImageView fitHeight="36" preserveRatio="true">
+            <Image url="@../images/logo.png"/>
+         </ImageView>
+
+         <VBox alignment="CENTER_LEFT" spacing="1">
+            <Label text="SCHEDULER - Administrateur"
+                   style="-fx-font-size:15px; -fx-font-weight:800; -fx-text-fill:#F4E7D4;"/>
+            <Label text="Université Iba Der Thiam de Thiès"
+                   style="-fx-font-size:10px; -fx-text-fill:rgba(244,231,212,0.65);"/>
+         </VBox>
+
+         <Region HBox.hgrow="ALWAYS"/>
+
+         <Label fx:id="utilisateurLabel" text=""
+                style="-fx-text-fill:#F4E7D4; -fx-font-size:12px; -fx-font-weight:700;"/>
+         <Label fx:id="roleLabel" text=""
+                style="-fx-text-fill:#D7B88A; -fx-font-size:11px;"/>
+         <Label fx:id="dateLabel" text=""
+                style="-fx-text-fill:rgba(244,231,212,0.70); -fx-font-size:11px;"/>
+
+         <StackPane alignment="TOP_RIGHT">
+             <Button fx:id="notificationButton" text="🔔"
+                     style="-fx-background-color:rgba(255,255,255,0.12); -fx-background-radius:50;
+                            -fx-min-width:38; -fx-min-height:38; -fx-cursor:hand; -fx-font-size:14px;"/>
+             <Label fx:id="notificationBadge" text="0" visible="false" mouseTransparent="true"
+                    translateX="4" translateY="-4"
+                    style="-fx-background-color:#D39A43; -fx-text-fill:#24160F; -fx-font-size:10px;
+                           -fx-font-weight:900; -fx-min-width:18; -fx-min-height:18;
+                           -fx-background-radius:9; -fx-alignment:center; -fx-padding:1 4;"/>
+         </StackPane>
+
+         <StackPane alignment="TOP_RIGHT">
+             <Button fx:id="signalementButton" text="⚠️"
+                     style="-fx-background-color:rgba(211,154,67,0.25); -fx-background-radius:50;
+                            -fx-min-width:38; -fx-min-height:38; -fx-cursor:hand; -fx-font-size:14px;"
+                     onAction="#handleSignalements"/>
+             <Label fx:id="signalementBadge" text="0" visible="false" mouseTransparent="true"
+                    translateX="4" translateY="-4"
+                    style="-fx-background-color:#A42424; -fx-text-fill:white; -fx-font-size:10px;
+                           -fx-font-weight:900; -fx-min-width:18; -fx-min-height:18;
+                           -fx-background-radius:9; -fx-alignment:center; -fx-padding:1 4;"/>
+         </StackPane>
+
+         <Button fx:id="actualiserButton" text="Actualiser"
+                 style="-fx-background-color:#6B4226; -fx-text-fill:white; -fx-background-radius:8;
+                        -fx-padding:6 14; -fx-font-size:12px; -fx-font-weight:700; -fx-cursor:hand;"/>
+         <Button fx:id="profilButton" text="Profil"
+                 style="-fx-background-color:transparent; -fx-text-fill:#F4E7D4;
+                        -fx-border-color:rgba(244,231,212,0.40); -fx-border-width:1;
+                        -fx-border-radius:8; -fx-background-radius:8;
+                        -fx-padding:6 12; -fx-font-size:12px; -fx-cursor:hand;"/>
+         <Button fx:id="deconnexionButton" text="Déconnexion"
+                 style="-fx-background-color:#A42424; -fx-text-fill:white;
+                        -fx-background-radius:8; -fx-padding:6 12;
+                        -fx-font-size:12px; -fx-font-weight:600; -fx-cursor:hand;"/>
+      </HBox>
+   </top>
+
+   <!-- SIDEBAR GAUCHE NON-ÉCRASABLE (LARGEUR FIXE 240px) -->
+   <left>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                  prefWidth="240" minWidth="240" maxWidth="250"
+                  style="-fx-background-color:#3D261A; -fx-background:#3D261A; -fx-border-color:transparent #EADBCE transparent transparent; -fx-border-width:0 1 0 0;">
+         <content>
+            <VBox spacing="6" style="-fx-padding:18 12; -fx-background-color:#3D261A;">
+               <Button fx:id="sidebarDashboardBtn" text="📊 Dashboard"
+                       style="-fx-background-color:#6B4226; -fx-text-fill:#FFFFFF; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:700; -fx-background-radius:8;
+                              -fx-border-color:transparent transparent transparent #D39A43; -fx-border-width:0 0 0 4; -fx-cursor:hand;"/>
+               
+               <VBox spacing="2">
+                  <Button fx:id="sidebarUtilisateursBtn" text="👥 Utilisateurs ▼"
+                          style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                                 -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+                  <VBox fx:id="sousMenuUtilisateurs" spacing="2" style="-fx-padding:0 0 0 16;">
+                     <Button fx:id="sidebarComptesBtn" text="📝 Comptes utilisateurs"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarDemandesBtn" text="📋 Demandes inscription"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarSignalementsBtn" text="⚠️ Signalements"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                  </VBox>
+               </VBox>
+
+               <VBox spacing="2">
+                  <Button fx:id="sidebarStructureBtn" text="🏛️ Structure ▼"
+                          style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                                 -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+                  <VBox fx:id="sousMenuStructure" spacing="2" style="-fx-padding:0 0 0 16;">
+                     <Button fx:id="sidebarUfrBtn" text="UFR"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarBatimentsBtn" text="Bâtiments"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarSallesBtn" text="Salles"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarEquipementsBtn" text="Équipements"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarClassesBtn" text="Classes"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6; -fx-cursor:hand;"/>
+                  </VBox>
+               </VBox>
+
+               <Button fx:id="sidebarReservationsBtn" text="📅 Réservations"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+               <Button fx:id="sidebarCoursReportesBtn" text="🔄 Cours reportés"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+               <Button fx:id="sidebarHistoriqueBtn" text="📜 Historique"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+               <Button fx:id="sidebarCarteBtn" text="🗺️ Carte interactive"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+               <Button fx:id="sidebarRapportsBtn" text="📊 Rapports &amp; Analytics"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8; -fx-cursor:hand;"/>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </left>
+
+   <!-- CONTENU CENTRAL DYNAMIQUE DANS UN SCROLLPANE FLUIDE -->
+   <center>
+      <StackPane fx:id="contenuPrincipal" style="-fx-background-color:#FBF8F3;">
+         <ScrollPane fitToWidth="true" style="-fx-background-color:transparent; -fx-background:transparent;" hbarPolicy="NEVER">
+            <content>
+               <VBox spacing="20" style="-fx-padding:24; -fx-background-color:#FBF8F3;">
+                  <HBox alignment="CENTER_LEFT" spacing="12">
+                     <VBox spacing="2">
+                        <Label text="Vue d'ensemble - Administration"
+                               style="-fx-font-size:22px; -fx-font-weight:900; -fx-text-fill:#3D261A;"/>
+                        <Label text="Indicateurs de gestion et occupation en direct du campus"
+                               style="-fx-font-size:12px; -fx-text-fill:#7A665A;"/>
+                     </VBox>
+                     <Region HBox.hgrow="ALWAYS"/>
+                     <ProgressIndicator fx:id="chargementIndicator" maxWidth="26" maxHeight="26" visible="false"/>
+                  </HBox>
+
+                  <!-- GRILLE DES CARTES STATISTIQUES EN RELIEF -->
+                  <GridPane hgap="14" vgap="14">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                     </columnConstraints>
+
+                     <VBox GridPane.columnIndex="0" alignment="CENTER" spacing="6"
+                           style="-fx-background-color:white; -fx-background-radius:12; -fx-padding:18;
+                                  -fx-border-color:transparent transparent transparent #6B4226;
+                                  -fx-border-width:0 0 0 5; -fx-border-radius:0 12 12 0; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 6, 0, 0, 2);">
+                        <Label text="👥 UTILISATEURS" style="-fx-font-size:11px; -fx-text-fill:#7A665A; -fx-font-weight:700;"/>
+                        <Label fx:id="totalUtilisateursLabel" text="0"
+                               style="-fx-font-size:32px; -fx-font-weight:900; -fx-text-fill:#6B4226;"/>
+                     </VBox>
+
+                     <VBox GridPane.columnIndex="1" alignment="CENTER" spacing="6"
+                           style="-fx-background-color:white; -fx-background-radius:12; -fx-padding:18;
+                                  -fx-border-color:transparent transparent transparent #9E5D32;
+                                  -fx-border-width:0 0 0 5; -fx-border-radius:0 12 12 0; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 6, 0, 0, 2);">
+                        <Label text="👨‍🏫 ENSEIGNANTS" style="-fx-font-size:11px; -fx-text-fill:#7A665A; -fx-font-weight:700;"/>
+                        <Label fx:id="totalEnseignantsLabel" text="0"
+                               style="-fx-font-size:32px; -fx-font-weight:900; -fx-text-fill:#9E5D32;"/>
+                     </VBox>
+
+                     <VBox GridPane.columnIndex="2" alignment="CENTER" spacing="6"
+                           style="-fx-background-color:white; -fx-background-radius:12; -fx-padding:18;
+                                  -fx-border-color:transparent transparent transparent #D39A43;
+                                  -fx-border-width:0 0 0 5; -fx-border-radius:0 12 12 0; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 6, 0, 0, 2);">
+                        <Label text="🎓 ÉTUDIANTS" style="-fx-font-size:11px; -fx-text-fill:#7A665A; -fx-font-weight:700;"/>
+                        <Label fx:id="totalEtudiantsLabel" text="0"
+                               style="-fx-font-size:32px; -fx-font-weight:900; -fx-text-fill:#D39A43;"/>
+                     </VBox>
+
+                     <VBox GridPane.columnIndex="3" alignment="CENTER" spacing="6"
+                           style="-fx-background-color:white; -fx-background-radius:12; -fx-padding:18;
+                                  -fx-border-color:transparent transparent transparent #2D6A4F;
+                                  -fx-border-width:0 0 0 5; -fx-border-radius:0 12 12 0; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 6, 0, 0, 2);">
+                        <Label text="🏛️ SALLES" style="-fx-font-size:11px; -fx-text-fill:#7A665A; -fx-font-weight:700;"/>
+                        <Label fx:id="totalSallesLabel" text="0"
+                               style="-fx-font-size:32px; -fx-font-weight:900; -fx-text-fill:#2D6A4F;"/>
+                     </VBox>
+
+                     <VBox GridPane.columnIndex="4" alignment="CENTER" spacing="6"
+                           style="-fx-background-color:white; -fx-background-radius:12; -fx-padding:18;
+                                  -fx-border-color:transparent transparent transparent #C89658;
+                                  -fx-border-width:0 0 0 5; -fx-border-radius:0 12 12 0; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 6, 0, 0, 2);">
+                        <Label text="📚 COURS" style="-fx-font-size:11px; -fx-text-fill:#7A665A; -fx-font-weight:700;"/>
+                        <Label fx:id="totalCoursLabel" text="0"
+                               style="-fx-font-size:32px; -fx-font-weight:900; -fx-text-fill:#C89658;"/>
+                     </VBox>
+
+                     <VBox fx:id="carteDemandesAttente" GridPane.columnIndex="5" alignment="CENTER" spacing="6"
+                           style="-fx-background-color:#FDF5F5; -fx-background-radius:12; -fx-padding:18;
+                                  -fx-border-color:transparent transparent transparent #A42424;
+                                  -fx-border-width:0 0 0 5; -fx-border-radius:0 12 12 0; -fx-cursor:hand; -fx-effect: dropshadow(three-pass-box, rgba(164,36,36,0.08), 6, 0, 0, 2);">
+                        <Label text="⏳ EN ATTENTE" style="-fx-font-size:11px; -fx-text-fill:#A42424; -fx-font-weight:700;"/>
+                        <Label fx:id="demandesEnAttenteLabel" text="0"
+                               style="-fx-font-size:32px; -fx-font-weight:900; -fx-text-fill:#A42424;"/>
+                     </VBox>
+                  </GridPane>
+
+                  <!-- GRAPHIQUES MODERNISÉS -->
+                  <HBox spacing="16">
+                     <VBox HBox.hgrow="ALWAYS" spacing="10"
+                           style="-fx-background-color:white; -fx-padding:20; -fx-background-radius:12;
+                                  -fx-border-color:#EADBCE; -fx-border-width:1; -fx-border-radius:12; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.04), 8, 0, 0, 2);">
+                        <Label text="📊 OCCUPATION DES SALLES PAR CRÉNEAU"
+                               style="-fx-font-size:13px; -fx-font-weight:800; -fx-text-fill:#3D261A;"/>
+                        <BarChart fx:id="occupationChart" prefHeight="320" prefWidth="580" animated="false">
+                           <xAxis><CategoryAxis fx:id="occupationXAxis" side="BOTTOM" label="CRÉNEAUX"/></xAxis>
+                           <yAxis><NumberAxis fx:id="occupationYAxis" side="LEFT" label="NB COURS"/></yAxis>
+                        </BarChart>
+                     </VBox>
+                     
+                     <VBox HBox.hgrow="ALWAYS" spacing="10"
+                           style="-fx-background-color:white; -fx-padding:20; -fx-background-radius:12;
+                                  -fx-border-color:#EADBCE; -fx-border-width:1; -fx-border-radius:12; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.04), 8, 0, 0, 2);">
+                        <Label text="🥧 RÉPARTITION DES UTILISATEURS"
+                               style="-fx-font-size:13px; -fx-font-weight:800; -fx-text-fill:#3D261A;"/>
+                        <PieChart fx:id="repartitionUtilisateursChart" prefHeight="320" prefWidth="460" animated="false"/>
+                     </VBox>
+                  </HBox>
+
+                  <!-- TABLEAU DES DEMANDES D'INSCRIPTION EN ATTENTE -->
+                  <VBox spacing="12"
+                        style="-fx-background-color:white; -fx-padding:20; -fx-background-radius:12;
+                               -fx-border-color:#EADBCE; -fx-border-width:1; -fx-border-radius:12; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.04), 8, 0, 0, 2);">
+                     <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="📝 DEMANDES D'INSCRIPTION EN ATTENTE"
+                               style="-fx-font-size:14px; -fx-font-weight:800; -fx-text-fill:#3D261A;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button onAction="#handleDemandes" text="Gérer toutes les demandes"
+                                style="-fx-background-color:#6B4226; -fx-text-fill:white;
+                                       -fx-background-radius:8; -fx-padding:8 18;
+                                       -fx-font-size:12px; -fx-font-weight:700; -fx-cursor:hand;"/>
+                     </HBox>
+                     <TableView fx:id="demandesTable" prefHeight="220" VBox.vgrow="ALWAYS">
+                        <columns>
+                           <TableColumn fx:id="nomDemandeColumn" text="Nom complet" prefWidth="200" minWidth="160"/>
+                           <TableColumn fx:id="emailDemandeColumn" text="Email" prefWidth="220" minWidth="180"/>
+                           <TableColumn fx:id="roleDemandeColumn" text="Rôle" prefWidth="120" minWidth="100"/>
+                           <TableColumn fx:id="dateDemandeColumn" text="Date demande" prefWidth="130" minWidth="110"/>
+                           <TableColumn fx:id="actionsDemandeColumn" text="Actions" prefWidth="240" minWidth="200"/>
+                        </columns>
+                        <placeholder><Label text="✅ Aucune demande en attente" style="-fx-text-fill:#2D6A4F; -fx-font-weight:700;"/></placeholder>
+                     </TableView>
+                  </VBox>
+               </VBox>
+            </content>
+         </ScrollPane>
+      </StackPane>
+   </center>
+</BorderPane>

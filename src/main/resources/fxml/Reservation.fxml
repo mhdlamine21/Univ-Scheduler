@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.ReservationControleur">
+   
+   <content>
+      <VBox spacing="20.0" style="-fx-background-color: #FBF8F3; -fx-padding: 25;" VBox.vgrow="ALWAYS">
+         
+         <Label text="📅 Nouvelle réservation de salle" style="-fx-font-size: 22px; -fx-font-weight: 900; -fx-text-fill: #3D261A;" />
+         
+         <!-- Sélection de la salle -->
+         <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <Label text="Salle souhaitée" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+            
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+               <TextField fx:id="salleField" promptText="Numéro de salle (ex: A101)..." HBox.hgrow="ALWAYS"
+                          style="-fx-padding: 9; -fx-background-radius: 6; -fx-border-color: #D0C5B8; -fx-border-radius: 6;" />
+               <Button fx:id="rechercherSalleButton" text="Rechercher"
+                       style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 9 18; -fx-font-weight: bold; -fx-cursor: hand;" />
+               <Button fx:id="rechercheAutoButton" text="🔍 Recherche auto"
+                       style="-fx-background-color: #D39A43; -fx-text-fill: #3D261A; -fx-background-radius: 6; -fx-padding: 9 18; -fx-font-weight: bold; -fx-cursor: hand;" />
+            </HBox>
+            
+            <Label fx:id="salleInfoLabel" style="-fx-text-fill: #6B4226; -fx-font-size: 14px; -fx-font-weight: bold;" />
+            <HBox fx:id="salleDetailsBox" spacing="20" alignment="CENTER_LEFT" visible="false" managed="false"
+                  style="-fx-background-color:#F5EFEB;-fx-padding:8 12;-fx-background-radius:6;-fx-border-color:#E6DCCD;-fx-border-width:1;-fx-border-radius:6;">
+               <Label fx:id="salleCapLabel" style="-fx-text-fill:#3D261A;-fx-font-size:12px; -fx-font-weight: bold;" />
+               <Label text="|" style="-fx-text-fill:#C0B3A6;" />
+               <Label fx:id="salleTypeLabel2" style="-fx-text-fill:#3D261A;-fx-font-size:12px;" />
+               <Label text="|" style="-fx-text-fill:#C0B3A6;" />
+               <Label fx:id="salleEqLabel" style="-fx-text-fill:#6B4226;-fx-font-size:12px;" wrapText="true" />
+            </HBox>
+         </VBox>
+         
+         <!-- Préférences de recherche -->
+         <VBox fx:id="preferencesPane" spacing="10.0" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <Label text="Préférences de recherche automatique" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+            
+            <GridPane hgap="15.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               
+               <Label text="Capacité min :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3D261A; -fx-font-size: 12px;" />
+               <Spinner fx:id="capaciteMinSpinner" prefWidth="120" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+               
+               <Label text="Type de salle :" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3D261A; -fx-font-size: 12px;" />
+               <ComboBox fx:id="typeSalleCombo" prefWidth="180" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+               
+               <Label text="Équipements requis :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #3D261A; -fx-font-size: 12px;" />
+               <ListView fx:id="equipementsList" prefHeight="200" minHeight="160" maxHeight="300" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+            </GridPane>
+         </VBox>
+         
+         <!-- Créneau -->
+         <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <Label text="Date et horaires" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+            
+            <GridPane hgap="15.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+               </columnConstraints>
+               
+               <Label text="Date :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3D261A; -fx-font-size: 13px;" />
+               <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0" prefWidth="220" />
+               
+               <Label text="Heure début :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #3D261A; -fx-font-size: 13px;" />
+               <ComboBox fx:id="heureDebutCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-size: 13px;" />
+               
+               <Label text="Heure fin :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #3D261A; -fx-font-size: 13px;" />
+               <ComboBox fx:id="heureFinCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-size: 13px;" />
+            </GridPane>
+         </VBox>
+         
+         <!-- Type de réservation -->
+         <VBox spacing="12.0" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <Label text="Type d'activité / événement" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+            <Label text="Veuillez cocher le type d'activité correspondant à votre réservation :" style="-fx-font-size: 11px; -fx-text-fill: #8C6D58;" />
+            
+            <FlowPane hgap="16" vgap="10" alignment="CENTER_LEFT">
+               <RadioButton fx:id="typeCoursCM" text="Cours Magistral (CM)">
+                  <toggleGroup>
+                     <ToggleGroup fx:id="typeReservationGroup" />
+                  </toggleGroup>
+               </RadioButton>
+               <RadioButton fx:id="typeCoursTD" text="Travaux Dirigés (TD)" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeCoursTP" text="Travaux Pratiques (TP)" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeExamen" text="Examen / Contrôle" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeRattrapage" text="Rattrapage" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeSoutenance" text="Soutenance" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeReunion" text="Réunion (Club / Pédagogique)" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeConference" text="Conférence / Séminaire" toggleGroup="$typeReservationGroup" />
+               <RadioButton fx:id="typeAutre" text="Autre événement" toggleGroup="$typeReservationGroup" />
+            </FlowPane>
+            
+            <!-- SECTION DYNAMIQUE DE CLASSE ET INTERVENANT -->
+            <VBox fx:id="classePane" spacing="10.0" visible="false" managed="false"
+                  style="-fx-background-color: #F8F6F2; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;">
+               <Label text="🎓 Concerne une classe d'étudiants :" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+               <HBox spacing="15" alignment="CENTER_LEFT">
+                  <VBox spacing="4" HBox.hgrow="ALWAYS">
+                     <Label text="Classe concernée :" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B4226;" />
+                     <ComboBox fx:id="classeCombo" maxWidth="Infinity" promptText="Sélectionner une classe..." />
+                  </VBox>
+                  <VBox fx:id="enseignantSelectBox" spacing="4" HBox.hgrow="ALWAYS" visible="false" managed="false">
+                     <Label text="Enseignant responsable :" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6B4226;" />
+                     <ComboBox fx:id="enseignantCombo" maxWidth="Infinity" promptText="Sélectionner l'enseignant..." />
+                  </VBox>
+               </HBox>
+               <Label fx:id="classeInfoLabel" text="📢 Tous les étudiants de cette classe ainsi que l'enseignant recevront une notification et un email dès validation." style="-fx-font-size: 11px; -fx-text-fill: #2E7D32; -fx-font-weight: bold;" />
+            </VBox>
+         </VBox>
+         
+         <!-- Motif -->
+         <VBox spacing="10.0" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <Label text="Motif &amp; Justification" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+            
+            <TextField fx:id="motifField" promptText="Motif de la réservation (ex: Remplacement, Conférence...)"
+                       style="-fx-padding: 9; -fx-background-radius: 6; -fx-border-color: #D0C5B8; -fx-border-radius: 6;" />
+            <TextArea fx:id="descriptionArea" promptText="Description complémentaire..." prefRowCount="3" />
+         </VBox>
+         
+         <!-- Options -->
+         <CheckBox fx:id="prolongationCheck" text="Autoriser la prolongation automatique si la salle reste libre" style="-fx-font-size: 13px; -fx-text-fill: #3D261A;" />
+         
+         <!-- Vérification -->
+         <HBox alignment="CENTER_LEFT" spacing="16.0">
+            <Button fx:id="verifierButton" text="⚡ Vérifier disponibilité"
+                    style="-fx-background-color: #D39A43; -fx-text-fill: #3D261A; -fx-background-radius: 8; -fx-padding: 10 22; -fx-font-weight: bold; -fx-cursor: hand;" />
+            <Label fx:id="disponibiliteLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <Button fx:id="negocierButton" text="🔄 Négocier / Demander la libération du créneau" visible="false" managed="false"
+                    style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 18; -fx-font-weight: bold; -fx-cursor: hand;" />
+         </HBox>
+       
+         <!-- Boutons -->
+         <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <Button fx:id="annulerButton" text="Annuler"
+                    style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 24; -fx-font-weight: 600; -fx-cursor: hand;" />
+            <Button fx:id="reserverButton" text="Confirmer la réservation" defaultButton="true" disable="true"
+                    style="-fx-background-color: #2E7D32; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 26; -fx-font-weight: bold; -fx-cursor: hand;" />
+         </HBox>
+         
+         <ProgressIndicator fx:id="chargementIndicator" maxWidth="50.0" maxHeight="50.0" visible="false" />
+      </VBox>
+   </content>
+</ScrollPane>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="820" prefWidth="1200"
+            style="-fx-background-color:#FBF8F3;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.TableauBordEtudiantControleur">
+   
+   <!-- TOP HEADER -->
+   <top>
+      <HBox alignment="CENTER_LEFT" spacing="14" minHeight="58" prefHeight="58"
+            style="-fx-background-color:#3D261A; -fx-padding:0 24; -fx-border-color:transparent transparent #D39A43 transparent; -fx-border-width:0 0 2 0;">
+         <ImageView fitHeight="36" fitWidth="65" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/logo.png" />
+            </image>
+         </ImageView>
+         <VBox alignment="CENTER_LEFT" spacing="1">
+            <Label text="Mon Espace Étudiant"
+                   style="-fx-font-size:16px; -fx-font-weight:900; -fx-text-fill:#FBF8F3; -fx-font-family:'Segoe UI';"/>
+            <Label text="UNIV-SCHEDULER - Université Iba Der Thiam de Thiès"
+                   style="-fx-font-size:10px; -fx-text-fill:#D39A43; -fx-font-weight:600;"/>
+         </VBox>
+         <Region HBox.hgrow="ALWAYS"/>
+         <Label fx:id="utilisateurLabel" text=""
+                style="-fx-text-fill:#FBF8F3; -fx-font-size:12px; -fx-font-weight:700;"/>
+         <Label fx:id="roleLabel" text=""
+                style="-fx-text-fill:#E6C387; -fx-font-size:11px;"/>
+         <Label fx:id="dateLabel" text=""
+                style="-fx-text-fill:rgba(251,248,243,0.65); -fx-font-size:11px;"/>
+         <Button fx:id="profilButton" text="Profil"
+                 style="-fx-background-color:transparent; -fx-text-fill:#FBF8F3;
+                        -fx-border-color:rgba(211,154,67,0.5); -fx-border-width:1;
+                        -fx-border-radius:8; -fx-background-radius:8;
+                        -fx-padding:6 14; -fx-font-size:12px; -fx-font-weight:600; -fx-cursor:hand;"/>
+         <Button fx:id="deconnexionButton" text="Déconnexion"
+                 style="-fx-background-color:#9E2A2B; -fx-text-fill:white;
+                        -fx-background-radius:8; -fx-padding:6 14;
+                        -fx-font-size:12px; -fx-font-weight:700; -fx-cursor:hand;"/>
+      </HBox>
+   </top>
+
+   <!-- SIDEBAR GAUCHE FIXE -->
+   <left>
+      <ScrollPane fitToWidth="true" minWidth="240" prefWidth="240" maxWidth="250"
+                  style="-fx-background-color:#3D261A; -fx-background:#3D261A; -fx-border-color:transparent #543310 transparent transparent; -fx-border-width:0 1 0 0;"
+                  hbarPolicy="NEVER">
+         <content>
+            <VBox spacing="6" style="-fx-padding:16 12; -fx-background-color:#3D261A;">
+               <Label text="NAVIGATION" style="-fx-text-fill:#D39A43; -fx-font-size:10px; -fx-font-weight:800; -fx-padding:0 8 6 8;"/>
+               
+               <Button fx:id="sidebarEdtBtn" text="📅 Mes emplois du temps"
+                       style="-fx-background-color:transparent; -fx-text-fill:#FBF8F3; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;" maxWidth="Infinity"/>
+               <Button fx:id="sidebarPlanningBtn" text="📋 Planning détaillé"
+                       style="-fx-background-color:transparent; -fx-text-fill:rgba(251,248,243,0.75); -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;" maxWidth="Infinity"/>
+               <Button fx:id="sidebarRechercheBtn" text="🔍 Rechercher une salle"
+                       style="-fx-background-color:transparent; -fx-text-fill:rgba(251,248,243,0.75); -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;" maxWidth="Infinity"/>
+               <Button fx:id="sidebarCarteBtn" text="🗺️ Carte interactive"
+                       style="-fx-background-color:transparent; -fx-text-fill:rgba(251,248,243,0.75); -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;" maxWidth="Infinity"/>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </left>
+
+   <!-- CONTENU CENTRAL -->
+   <center>
+      <StackPane fx:id="contenuPrincipal" style="-fx-background-color:#FBF8F3;">
+         <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color:transparent; -fx-background:transparent;">
+            <content>
+               <VBox style="-fx-background-color:#FBF8F3;">
+                  
+                  <!-- Bande info étudiant -->
+                  <HBox spacing="20"
+                        style="-fx-background-color:white; -fx-padding:14 24;
+                               -fx-border-color:transparent transparent #E6DCCD transparent;
+                               -fx-border-width:0 0 1 0;">
+                     <VBox spacing="2">
+                        <Label text="Bienvenue" style="-fx-font-size:11px; -fx-text-fill:#8C6D58; -fx-font-weight:600;"/>
+                        <Label fx:id="bienvenueLabel" text=""
+                               style="-fx-font-size:15px; -fx-font-weight:800; -fx-text-fill:#3D261A;"/>
+                     </VBox>
+                     <VBox spacing="2">
+                        <Label text="Classe" style="-fx-font-size:11px; -fx-text-fill:#8C6D58; -fx-font-weight:600;"/>
+                        <Label fx:id="classeLabel" text="-"
+                               style="-fx-font-size:13px; -fx-font-weight:700; -fx-text-fill:#6B4226;"/>
+                     </VBox>
+                     <VBox spacing="2">
+                        <Label text="Année" style="-fx-font-size:11px; -fx-text-fill:#8C6D58; -fx-font-weight:600;"/>
+                        <Label fx:id="anneeLabel" text="-"
+                               style="-fx-font-size:13px; -fx-font-weight:700; -fx-text-fill:#3D261A;"/>
+                     </VBox>
+                     <VBox spacing="2">
+                        <Label text="N° étudiant" style="-fx-font-size:11px; -fx-text-fill:#8C6D58; -fx-font-weight:600;"/>
+                        <Label fx:id="numeroEtudiantLabel" text="-"
+                               style="-fx-font-size:13px; -fx-font-weight:700; -fx-text-fill:#D39A43;"/>
+                     </VBox>
+                     <VBox spacing="2">
+                        <Label text="Statut" style="-fx-font-size:11px; -fx-text-fill:#8C6D58; -fx-font-weight:600;"/>
+                        <Label fx:id="typeEtudiantLabel" text="(Étudiant)"
+                               style="-fx-font-size:12px; -fx-font-weight:600; -fx-text-fill:#8C6D58;"/>
+                     </VBox>
+                     <Region HBox.hgrow="ALWAYS"/>
+                  </HBox>
+
+                  <!-- LÉGENDE EDT -->
+                  <HBox fx:id="legendContainer" spacing="25" alignment="CENTER_LEFT"
+                        style="-fx-background-color:#F5EFEB; -fx-padding:8 24;
+                               -fx-border-color:transparent transparent #E6DCCD transparent;
+                               -fx-border-width:0 0 1 0;"/>
+
+                  <!-- Contenu : Mes emplois du temps -->
+                  <VBox spacing="16" style="-fx-padding:18;">
+                     <VBox fx:id="edtPrincipalContainer" spacing="12"
+                           style="-fx-background-color:white; -fx-padding:18 20;
+                                  -fx-background-radius:12; -fx-border-color:#E6DCCD;
+                                  -fx-border-width:1; -fx-border-radius:12;">
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <VBox spacing="3">
+                              <Label fx:id="edtTitreLabel" text="Aucun emploi du temps"
+                                     style="-fx-font-size:16px; -fx-font-weight:800; -fx-text-fill:#3D261A;"/>
+                              <Label fx:id="edtPeriodeLabel" text=""
+                                     style="-fx-font-size:12px; -fx-text-fill:#8C6D58;"/>
+                           </VBox>
+                           <Region HBox.hgrow="ALWAYS"/>
+                           <Button fx:id="actualiserButton" text="🔄 Actualiser"
+                                   style="-fx-background-color:#F5EFEB; -fx-text-fill:#6B4226;
+                                          -fx-background-radius:8; -fx-padding:7 14;
+                                          -fx-font-weight:700; -fx-cursor:hand;"/>
+                           <Button fx:id="aujourdhuiButton" text="Aujourd'hui"
+                                   style="-fx-background-color:#2E7D32; -fx-text-fill:white;
+                                          -fx-background-radius:8; -fx-padding:7 12;
+                                          -fx-font-weight:700; -fx-cursor:hand;"/>
+                           <Button fx:id="semaineButton" text="Semaine"
+                                   style="-fx-background-color:#6B4226; -fx-text-fill:white;
+                                          -fx-background-radius:8; -fx-padding:7 12;
+                                          -fx-font-weight:700; -fx-cursor:hand;"/>
+                           <Button fx:id="exporterPDFButton" text="📄 PDF"
+                                   style="-fx-background-color:#9E2A2B; -fx-text-fill:white;
+                                          -fx-background-radius:8; -fx-padding:7 12;
+                                          -fx-font-weight:700; -fx-cursor:hand;"/>
+                           <Button fx:id="exporterExcelButton" text="📊 Excel"
+                                   style="-fx-background-color:#2E7D32; -fx-text-fill:white;
+                                          -fx-background-radius:8; -fx-padding:7 12;
+                                          -fx-font-weight:700; -fx-cursor:hand;"/>
+                        </HBox>
+                        
+                        <ScrollPane fitToWidth="false" minHeight="450" prefHeight="500"
+                                    style="-fx-background-color:transparent; -fx-background:transparent;"
+                                    hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+                           <content>
+                              <GridPane fx:id="emploiTempsGrid" hgap="2" vgap="2"
+                                        style="-fx-background-color:#E6DCCD; -fx-padding:2; -fx-background-radius:8;"/>
+                           </content>
+                        </ScrollPane>
+                        <Label fx:id="aucunEdtLabel"
+                               text="Aucun emploi du temps disponible pour votre classe."
+                               style="-fx-text-fill:#8C6D58; -fx-font-size:14px; -fx-padding:20;"
+                               visible="false" managed="false"/>
+                     </VBox>
+                     
+                     <VBox spacing="10"
+                           style="-fx-background-color:white; -fx-padding:18 20;
+                                  -fx-background-radius:12; -fx-border-color:#E6DCCD;
+                                  -fx-border-width:1; -fx-border-radius:12;">
+                        <Label text="📋 Autres emplois du temps"
+                               style="-fx-font-size:15px; -fx-font-weight:800; -fx-text-fill:#3D261A;"/>
+                        <VBox fx:id="listeAutresEdtContainer" spacing="8">
+                           <Label text="Chargement..." style="-fx-text-fill:#8C6D58; -fx-font-size:12px;"/>
+                        </VBox>
+                     </VBox>
+                  </VBox>
+                  
+               </VBox>
+            </content>
+         </ScrollPane>
+      </StackPane>
+   </center>
+</BorderPane>

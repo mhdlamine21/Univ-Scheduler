@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.GestionMatieresControleur">
+   
+   <content>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20;">
+         
+         <Label fx:id="messageLabel" style="-fx-text-fill: #E53E3E;" visible="false" />
+
+         <!-- Formulaire -->
+         <VBox spacing="15.0" style="-fx-background-color: #F8F9FF; -fx-padding: 15; -fx-background-radius: 8;">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Informations matière" />
+
+            <GridPane hgap="10.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="110.0" prefWidth="110.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="85.0" />
+               </rowConstraints>
+
+               <Label text="Filière :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <ComboBox fx:id="filiereCombo" promptText="Sélectionner une filière" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Nom :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="nomField" promptText="Nom de la matière" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Code :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField fx:id="codeField" promptText="ex: INF101" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label text="Volume :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <Spinner fx:id="volumeSpinner" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+               <Label text="Description :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <TextArea fx:id="descriptionArea" prefRowCount="3" promptText="Description" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+               <Button fx:id="annulerButton" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5;" text="Annuler" />
+               <Button fx:id="ajouterButton" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5;" text="Ajouter" />
+               <Button fx:id="modifierButton" disable="true" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5;" text="Modifier" />
+               <Button fx:id="supprimerButton" disable="true" style="-fx-background-color: #E53E3E; -fx-text-fill: white; -fx-background-radius: 5;" text="Supprimer" />
+            </HBox>
+         </VBox>
+
+         <!-- Filtres -->
+         <VBox spacing="10.0">
+            <Label fx:id="totalMatieresLabel" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="0 matière(s)" />
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Rechercher des matières" />
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <TextField fx:id="rechercheMatiereField" prefWidth="250" promptText="Rechercher par nom ou code..." />
+               <ComboBox fx:id="filtreFiliereCombo" prefWidth="150" promptText="Filière" />
+               <Button fx:id="rechercherMatiereButton" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="Rechercher" />
+               <Button fx:id="reinitialiserMatiereButton" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="Réinitialiser" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Button fx:id="rafraichirButton" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="Rafraîchir" />
+            </HBox>
+         </VBox>
+
+         <!-- Tableau -->
+         <TableView fx:id="matiereTable" prefHeight="700" VBox.vgrow="ALWAYS">
+            <columns>
+               <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
+               <TableColumn fx:id="nomColumn" prefWidth="180" text="Nom" />
+               <TableColumn fx:id="codeColumn" prefWidth="100" text="Code" />
+               <TableColumn fx:id="filiereColumn" prefWidth="150" text="Filière" />
+               <TableColumn fx:id="volumeColumn" prefWidth="70" text="Vo..." />
+               <TableColumn fx:id="descriptionColumn" prefWidth="200" text="Description" />
+               <TableColumn fx:id="actionsColumn" prefWidth="120" text="Actions" />
+            </columns>
+            <placeholder>
+               <Label style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" text="Aucune matière" />
+            </placeholder>
+         </TableView>
+
+         <ProgressIndicator fx:id="chargementIndicator" maxHeight="50" maxWidth="50" visible="false" />
+      </VBox>
+   </content>
+</ScrollPane>

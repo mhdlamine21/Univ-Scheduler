@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.GestionCoursControleur">
+   
+   <content>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20;">
+
+         <Label fx:id="messageLabel" style="-fx-text-fill: #E53E3E;" visible="false" />
+
+         <!-- Formulaire création cours -->
+         <VBox spacing="15.0" style="-fx-background-color: #F8F9FF; -fx-padding: 15; -fx-background-radius: 8;">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Créer un nouveau cours" />
+
+            <GridPane hgap="10.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+                  <RowConstraints minHeight="38.0" />
+               </rowConstraints>
+               
+               <Label text="Filière :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <ComboBox fx:id="filiereMatiereCombo" promptText="Sélectionner une filière" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+
+               <Label text="Matière :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <ComboBox fx:id="matiereCombo" promptText="Choisir une matière" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+
+               <Label text="Enseignant :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <ComboBox fx:id="enseignantCombo" promptText="Choisir un enseignant" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+
+               <Label text="Classe :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <ComboBox fx:id="classeCombo" promptText="Choisir une classe" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+
+               <Label text="Type :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <ComboBox fx:id="typeCoursCombo" promptText="Type" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+               <Label text="Volume (h) :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A; -fx-font-size: 13px;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+               <TextField fx:id="volumeField" promptText="ex: 30" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            </GridPane>
+
+            <!-- Panneau groupes -->
+            <VBox fx:id="groupesPane" managed="false" spacing="10.0" visible="false">
+               <TitledPane expanded="true" text="Groupes">
+                  <content>
+                     <VBox spacing="10.0" style="-fx-padding: 10;">
+                        <RadioButton fx:id="tousGroupesRadio" selected="true" text="Tous les groupes" />
+                        <RadioButton fx:id="groupesSpecifiquesRadio" text="Groupes spécifiques" />
+                        <ListView fx:id="groupesList" prefHeight="180.0" minHeight="150.0" />
+                        <Label fx:id="infoGroupesLabel" style="-fx-font-size: 11px; -fx-text-fill: #7B83C4;" />
+                     </VBox>
+                  </content>
+               </TitledPane>
+            </VBox>
+
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+               <Button fx:id="annulerButton" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5;" text="Annuler" />
+               <Button fx:id="ajouterButton" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5;" text="Ajouter" />
+               <Button fx:id="modifierButton" disable="true" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5;" text="Modifier" />
+               <Button fx:id="supprimerButton" disable="true" style="-fx-background-color: #E53E3E; -fx-text-fill: white; -fx-background-radius: 5;" text="Supprimer" />
+            </HBox>
+         </VBox>
+
+         <Label fx:id="totalCoursLabel" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" text="0 cours" />
+
+         <!-- Filtres -->
+         <VBox spacing="10.0">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Rechercher des cours" />
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <TextField fx:id="rechercheCoursField" prefWidth="280" promptText="Matière, enseignant ou classe..." />
+               <Region HBox.hgrow="ALWAYS" />
+               <ComboBox fx:id="filtreTypeCoursCombo" prefWidth="130" promptText="Type" />
+               <ComboBox fx:id="filtreClasseCombo" prefWidth="150" promptText="Classe" />
+               <Button fx:id="rechercherCoursButton" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5;" text="Rechercher" />
+               <Button fx:id="reinitialiserCoursButton" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5;" text="Réinitialiser" />
+               <Button fx:id="rafraichirButton" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5;" text="Rafraîchir" />
+            </HBox>
+         </VBox>
+
+         <!-- Tableau -->
+         <TableView fx:id="coursTable" prefHeight="750" VBox.vgrow="ALWAYS">
+            <columns>
+               <TableColumn fx:id="idColumn" prefWidth="40" text="ID" />
+               <TableColumn fx:id="matiereColumn" prefWidth="180" text="Matière" />
+               <TableColumn fx:id="enseignantColumn" prefWidth="160" text="Enseignant" />
+               <TableColumn fx:id="classeColumn" prefWidth="145" text="Classe" />
+               <TableColumn fx:id="typeColumn" prefWidth="70" text="Type" />
+               <TableColumn fx:id="groupesColumn" prefWidth="80" text="Groupes" />
+               <TableColumn fx:id="volumeColumn" prefWidth="60" text="Volume" />
+               <TableColumn fx:id="actionsColumn" prefWidth="130" text="Actions" />
+            </columns>
+            <placeholder>
+               <Label style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" text="Aucun cours" />
+            </placeholder>
+         </TableView>
+
+         <ProgressIndicator fx:id="chargementIndicator" maxHeight="50" maxWidth="50" visible="false" />
+      </VBox>
+   </content>
+</ScrollPane>

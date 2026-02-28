@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.GestionUfrControleur">
+   
+   <content>
+      <VBox spacing="20.0" style="-fx-background-color: #FBF8F3; -fx-padding: 24;">
+         
+         <!-- En-tête titre -->
+         <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label text="🏛️ Gestion des Unités de Formation et de Recherche (UFR)"
+                   style="-fx-font-size: 20px; -fx-font-weight: 900; -fx-text-fill: #3D261A;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="rafraichirButton" text="🔄 Rafraîchir"
+                    style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 16; -fx-font-weight: 700; -fx-cursor: hand;" />
+         </HBox>
+         
+         <!-- Formulaire UFR avec gestion photo -->
+         <VBox spacing="16.0" style="-fx-background-color: white; -fx-padding: 22; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 10, 0, 0, 2);">
+            <Label text="Détails de l'UFR" style="-fx-font-size: 16px; -fx-font-weight: 800; -fx-text-fill: #3D261A;" />
+            
+            <HBox spacing="24" alignment="TOP_LEFT">
+               <!-- Zone Photo -->
+               <VBox spacing="8" alignment="CENTER" minWidth="130" prefWidth="130">
+                  <StackPane prefWidth="120" prefHeight="100"
+                             style="-fx-background-color: #F5EFEB; -fx-background-radius: 10; -fx-border-color: #D39A43; -fx-border-width: 1.5; -fx-border-radius: 10;">
+                     <ImageView fx:id="photoPreview" fitHeight="90" fitWidth="110" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../images/logo.png" />
+                        </image>
+                     </ImageView>
+                  </StackPane>
+                  <Button fx:id="choisirPhotoButton" text="📷 Choisir photo"
+                          style="-fx-background-color: #D39A43; -fx-text-fill: #3D261A; -fx-background-radius: 6; -fx-padding: 5 10; -fx-font-size: 11px; -fx-font-weight: 700; -fx-cursor: hand;" />
+                  <Button fx:id="supprimerPhotoButton" text="✕ Supprimer"
+                          style="-fx-background-color: transparent; -fx-text-fill: #9E2A2B; -fx-font-size: 10px; -fx-cursor: hand;" visible="false" />
+               </VBox>
+               
+               <!-- Champs de formulaire -->
+               <GridPane hgap="15.0" vgap="12.0" HBox.hgrow="ALWAYS">
+                  <columnConstraints>
+                     <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                     <ColumnConstraints hgrow="ALWAYS" />
+                  </columnConstraints>
+                  
+                  <Label text="Code / Sigle :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                  <TextField fx:id="codeField" promptText="ex: SET, SES, SAT, 2S..." GridPane.columnIndex="1" GridPane.rowIndex="0"
+                             style="-fx-padding: 8 12; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                  
+                  <Label text="Nom complet :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                  <TextField fx:id="nomField" promptText="Nom officiel de l'UFR" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                             style="-fx-padding: 8 12; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                  
+                  <Label text="Localisation / Campus :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                  <TextField fx:id="localisationField" promptText="ex: Campus Principal, Cité Malick Sy, Aile Nord..." GridPane.columnIndex="1" GridPane.rowIndex="2"
+                             style="-fx-padding: 8 12; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                  
+                  <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                  <TextArea fx:id="descriptionArea" prefRowCount="3" promptText="Description et filières associées..." GridPane.columnIndex="1" GridPane.rowIndex="3"
+                            style="-fx-padding: 6; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+               </GridPane>
+            </HBox>
+            
+            <Label fx:id="messageLabel" style="-fx-text-fill: #9E2A2B; -fx-font-weight: bold;" visible="false" wrapText="true" />
+            
+            <HBox alignment="CENTER_RIGHT" spacing="12.0">
+               <Button fx:id="annulerButton" text="Annuler"
+                       style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 18; -fx-font-weight: 600; -fx-cursor: hand;" />
+               <Button fx:id="ajouterButton" text="Ajouter l'UFR"
+                       style="-fx-background-color: #2E7D32; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 800; -fx-cursor: hand;" />
+               <Button fx:id="modifierButton" text="Modifier" disable="true"
+                       style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 800; -fx-cursor: hand;" />
+               <Button fx:id="supprimerButton" text="Supprimer" disable="true"
+                       style="-fx-background-color: #9E2A2B; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 800; -fx-cursor: hand;" />
+            </HBox>
+         </VBox>
+         
+         <!-- Tableau UFR -->
+         <VBox spacing="10.0" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-padding: 18; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <Label text="Liste des facultés et instituts" style="-fx-font-size: 15px; -fx-font-weight: 800; -fx-text-fill: #3D261A;" />
+            
+            <TableView fx:id="ufrTable" prefHeight="450" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="photoColumn" text="Logo / Photo" prefWidth="90" />
+                  <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                  <TableColumn fx:id="codeColumn" text="Sigle" prefWidth="80" />
+                  <TableColumn fx:id="nomColumn" text="Nom officiel" prefWidth="200" />
+                  <TableColumn fx:id="localisationColumn" text="Localisation / Campus" prefWidth="160" />
+                  <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="280" />
+                  <TableColumn fx:id="dateColumn" text="Date création" prefWidth="110" />
+                  <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="110" />
+               </columns>
+               <placeholder>
+                  <Label text="Aucune UFR configurée" style="-fx-font-size: 14px; -fx-text-fill: #8C6D58;" />
+               </placeholder>
+            </TableView>
+         </VBox>
+         
+         <ProgressIndicator fx:id="chargementIndicator" visible="false" />
+      </VBox>
+   </content>
+</ScrollPane>

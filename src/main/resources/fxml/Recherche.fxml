@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.RechercheControleur">
+   
+   <content>
+      <VBox spacing="20.0" style="-fx-background-color: #FBF8F3; -fx-padding: 24;" VBox.vgrow="ALWAYS" prefWidth="950">
+         
+         <!-- En-tête -->
+         <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label text="🔍 Recherche Dynamique de Salles &amp; Disponibilités en Temps Réel"
+                   style="-fx-font-size: 18px; -fx-font-weight: 900; -fx-text-fill: #3D261A;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="retourButton" text="← Retour"
+                    style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 6 14; -fx-font-weight: 600; -fx-cursor: hand;" />
+         </HBox>
+         
+         <!-- Panneau des filtres dynamiques -->
+         <VBox spacing="14.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 8, 0, 0, 2);">
+            
+            <HBox spacing="20" alignment="CENTER_LEFT">
+               <Label text="Mode temporel :" style="-fx-font-weight: 800; -fx-text-fill: #3D261A; -fx-font-size: 13px;" />
+               <RadioButton fx:id="maintenantRadio" text="🟢 En direct maintenant" selected="true"
+                            style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #2E7D32;">
+                  <toggleGroup>
+                     <ToggleGroup fx:id="rechercheType" />
+                  </toggleGroup>
+               </RadioButton>
+               <RadioButton fx:id="datePreciseRadio" text="📅 Date &amp; créneau précis" toggleGroup="$rechercheType"
+                            style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #3D261A;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <!-- Champ de recherche live par numéro/nom -->
+               <TextField fx:id="rechercheRapideField" promptText="Recherche instantanée (ex: A101, Amphi...)" prefWidth="250"
+                          style="-fx-padding: 7 12; -fx-background-radius: 8; -fx-border-color: #D39A43; -fx-border-width: 1.5; -fx-border-radius: 8;" />
+            </HBox>
+
+            <Separator style="-fx-opacity: 0.5;" />
+
+            <!-- Critères de recherche -->
+            <GridPane hgap="15.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+
+               <Label text="Date :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <DatePicker fx:id="datePicker" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+               <Label text="Heure début :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+               <ComboBox fx:id="heureDebutCombo" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+               <Label text="Durée (min) :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <Spinner fx:id="dureeSpinner" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+               <Label text="Heure fin :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <ComboBox fx:id="heureFinCombo" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+               <Label text="Capacité min :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <Spinner fx:id="capaciteMinSpinner" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+               <Label text="Type de salle :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <ComboBox fx:id="typeSalleCombo" maxWidth="Infinity" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+               <Label text="Bâtiment :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <ComboBox fx:id="batimentCombo" promptText="Tous les bâtiments du campus" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+            </GridPane>
+
+            <!-- Équipements requis -->
+            <VBox spacing="6.0">
+               <Label text="Équipements requis :" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+               <ListView fx:id="equipementsList" prefHeight="140.0" minHeight="110.0" />
+            </VBox>
+
+            <!-- Boutons -->
+            <HBox alignment="CENTER_RIGHT" spacing="12.0">
+               <Button fx:id="reinitialiserButton" text="↺ Réinitialiser"
+                       style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 600; -fx-cursor: hand;" />
+               <Button fx:id="rechercherButton" text="🔍 Actualiser les résultats" defaultButton="true"
+                       style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 22; -fx-font-weight: 800; -fx-cursor: hand;" />
+            </HBox>
+         </VBox>
+
+         <!-- RÉSULTATS DYNAMIQUES -->
+         <VBox spacing="10.0" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-padding: 18; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Salles correspondantes :" style="-fx-font-size: 15px; -fx-font-weight: 800; -fx-text-fill: #3D261A;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Label fx:id="resultatsCountLabel" text="0 salle(s) trouvée(s)" style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #6B4226;" />
+            </HBox>
+
+            <TableView fx:id="resultatsTable" VBox.vgrow="ALWAYS" prefHeight="420">
+               <columns>
+                  <TableColumn fx:id="photoColumn" text="Photo" prefWidth="75" />
+                  <TableColumn fx:id="numeroColumn" text="Salle" prefWidth="110" />
+                  <TableColumn fx:id="capaciteColumn" text="Capacité" prefWidth="85" />
+                  <TableColumn fx:id="typeColumn" text="Type" prefWidth="85" />
+                  <TableColumn fx:id="batimentColumn" text="Bâtiment" prefWidth="180" />
+                  <TableColumn fx:id="etageColumn" text="Étage" prefWidth="65" />
+                  <TableColumn fx:id="disponibiliteColumn" text="Disponibilité Live" prefWidth="140" />
+                  <TableColumn fx:id="actionsColumn" text="Action" prefWidth="180" />
+               </columns>
+               <placeholder>
+                  <Label text="Aucune salle ne correspond aux critères sélectionnés" style="-fx-font-size: 14px; -fx-text-fill: #8C6D58;" />
+               </placeholder>
+            </TableView>
+         </VBox>
+
+         <ProgressIndicator fx:id="chargementIndicator" visible="false" maxWidth="40" maxHeight="40" />
+      </VBox>
+   </content>
+</ScrollPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.ChangerMotDePasseControleur">
+   
+   <content>
+      <VBox spacing="25.0" style="-fx-background-color: white; -fx-padding: 30;">
+         
+         <Label text="Modification du mot de passe" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+         
+         <VBox spacing="10.0">
+            <Label text="Ancien mot de passe" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+            <PasswordField fx:id="ancienMotDePasseField" promptText="Entrez votre ancien mot de passe" style="-fx-padding: 10; -fx-border-color: #E8EBFF; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            <Label fx:id="ancienMessageLabel" style="-fx-text-fill: #E53E3E; -fx-font-size: 12px;" />
+         </VBox>
+         
+         <VBox spacing="10.0">
+            <Label text="Nouveau mot de passe" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+            <PasswordField fx:id="nouveauMotDePasseField" promptText="Entrez votre nouveau mot de passe" style="-fx-padding: 10; -fx-border-color: #E8EBFF; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            <Label fx:id="nouveauMessageLabel" style="-fx-text-fill: #E53E3E; -fx-font-size: 12px;" />
+            
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <ProgressIndicator fx:id="strengthIndicator" maxHeight="20.0" maxWidth="100.0" />
+               <Label fx:id="strengthLabel" style="-fx-font-size: 12px;" text="Force du mot de passe" />
+            </HBox>
+         </VBox>
+         
+         <VBox spacing="10.0">
+            <Label text="Confirmer le mot de passe" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+            <PasswordField fx:id="confirmerMotDePasseField" promptText="Confirmez votre nouveau mot de passe" style="-fx-padding: 10; -fx-border-color: #E8EBFF; -fx-border-radius: 5; -fx-background-radius: 5;" />
+            <Label fx:id="confirmerMessageLabel" style="-fx-text-fill: #E53E3E; -fx-font-size: 12px;" />
+         </VBox>
+         
+         <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <Button fx:id="annulerButton" text="Annuler" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 25;" />
+            <Button fx:id="changerButton" defaultButton="true" text="Changer" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 10 25;" />
+         </HBox>
+         
+         <Label fx:id="messageLabel" style="-fx-text-fill: #E53E3E; -fx-font-size: 14px;" visible="false" />
+         
+      </VBox>
+   </content>
+</ScrollPane>

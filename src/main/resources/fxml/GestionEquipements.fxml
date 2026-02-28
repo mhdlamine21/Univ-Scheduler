@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.GestionEquipementsControleur">
+   
+   <content>
+      <VBox spacing="20.0" style="-fx-background-color: #FBF8F3; -fx-padding: 24;" VBox.vgrow="ALWAYS">
+         
+         <!-- En-tête -->
+         <HBox alignment="CENTER_LEFT" spacing="12">
+            <Label text="🛠️ Gestion des Équipements &amp; Matériels"
+                   style="-fx-font-size: 20px; -fx-font-weight: 900; -fx-text-fill: #3D261A;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="rafraichirButton" text="🔄 Rafraîchir"
+                    style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 16; -fx-font-weight: 700; -fx-cursor: hand;" />
+         </HBox>
+         
+         <!-- Formulaire -->
+         <VBox spacing="16.0" style="-fx-background-color: white; -fx-padding: 22; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1; -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.06), 10, 0, 0, 2);">
+            
+            <Label text="Fiche équipement" style="-fx-font-size: 16px; -fx-font-weight: 800; -fx-text-fill: #3D261A;" />
+            
+            <GridPane hgap="15.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               
+               <Label text="Nom / Désignation :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+               <TextField fx:id="nomField" promptText="ex: Vidéoprojecteur HDMI, Tableau blanc..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0"
+                          style="-fx-padding: 8 12; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+               
+               <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+               <TextArea fx:id="descriptionArea" prefRowCount="3" promptText="Caractéristiques techniques, marque, état..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1"
+                         style="-fx-padding: 6; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+               
+               <Label text="Quantité totale :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+               <Spinner fx:id="quantiteSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="140" />
+            </GridPane>
+            
+            <Label fx:id="messageLabel" style="-fx-text-fill: #9E2A2B; -fx-font-size: 13px; -fx-font-weight: bold;" visible="false" />
+            
+            <HBox alignment="CENTER_RIGHT" spacing="12.0">
+               <Button fx:id="annulerButton" text="Annuler"
+                       style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 18; -fx-font-weight: 600; -fx-cursor: hand;" />
+               <Button fx:id="ajouterButton" text="Ajouter l'équipement"
+                       style="-fx-background-color: #2E7D32; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 800; -fx-cursor: hand;" />
+               <Button fx:id="modifierButton" text="Modifier" disable="true"
+                       style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 800; -fx-cursor: hand;" />
+               <Button fx:id="supprimerButton" text="Supprimer" disable="true"
+                       style="-fx-background-color: #9E2A2B; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 800; -fx-cursor: hand;" />
+            </HBox>
+         </VBox>
+         
+         <!-- Filtres et Tableau -->
+         <VBox spacing="12.0" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-padding: 16; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+            
+            <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-background-color: #F5EFEB; -fx-padding: 10 14; -fx-background-radius: 8;">
+               <Label text="🔍 Rechercher :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+               <TextField fx:id="rechercheField" promptText="Nom ou description..." HBox.hgrow="ALWAYS"
+                          style="-fx-padding: 6 10; -fx-background-radius: 6; -fx-border-color: #D0C5B8; -fx-border-radius: 6;" />
+               <Button fx:id="rechercherButton" text="Filtrer"
+                       style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 14; -fx-font-weight: 700; -fx-cursor: hand;" />
+               <Button fx:id="reinitialiserButton" text="↺ Réinitialiser"
+                       style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 12; -fx-cursor: hand;" />
+            </HBox>
+            
+            <TableView fx:id="equipementTable" minHeight="500" prefHeight="750" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="idColumn" text="ID" minWidth="50" prefWidth="60" />
+                  <TableColumn fx:id="nomColumn" text="Désignation" minWidth="160" prefWidth="220" />
+                  <TableColumn fx:id="descriptionColumn" text="Description" minWidth="240" prefWidth="380" />
+                  <TableColumn fx:id="quantiteColumn" text="Qté Totale" minWidth="90" prefWidth="110" />
+                  <TableColumn fx:id="quantiteUtiliseeColumn" text="En Utilisation" minWidth="100" prefWidth="120" />
+                  <TableColumn fx:id="quantiteDisponibleColumn" text="En Stock Dispo" minWidth="110" prefWidth="130" />
+                  <TableColumn fx:id="actionsColumn" text="Actions" minWidth="140" prefWidth="160" />
+               </columns>
+               <placeholder>
+                  <Label text="Aucun équipement répertorié" style="-fx-font-size: 14px; -fx-text-fill: #8C6D58;" />
+               </placeholder>
+            </TableView>
+         </VBox>
+         
+         <ProgressIndicator fx:id="chargementIndicator" maxWidth="40.0" maxHeight="40.0" visible="false" />
+      </VBox>
+   </content>
+</ScrollPane>

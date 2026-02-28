@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.PlanningControleur">
+   
+   <content>
+      <SplitPane dividerPositions="0.7" orientation="HORIZONTAL" style="-fx-background-color: #F8F9FF;">
+         <items>
+            <!-- Partie gauche : Grille principale -->
+            <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20;">
+               
+               <!-- Titre EDT -->
+               <VBox spacing="4" style="-fx-padding: 0 0 10 0; -fx-background-color: #F8F9FF; -fx-padding: 12; -fx-background-radius: 8;">
+                  <Label fx:id="classeTitreLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Emploi du temps" />
+                  <Label fx:id="periodeDetailLabel" style="-fx-font-size: 13px; -fx-text-fill: #7B83C4;" text="Sélectionnez une classe et une période" />
+               </VBox>
+               
+               <!-- Barre de contrôle -->
+               <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-background-color: #F8F9FF; -fx-padding: 12; -fx-background-radius: 6;">
+                  <Label text="Classe :" style="-fx-font-weight: bold;" />
+                  <ComboBox fx:id="classeFilterCombo" promptText="Sélectionner une classe" prefWidth="200.0" />
+                  
+                  <Label text="Date :" style="-fx-font-weight: bold;" />
+                  <DatePicker fx:id="datePicker" />
+                  
+                  <Label text="Vue :" style="-fx-font-weight: bold;" />
+                  <RadioButton fx:id="vueJourRadio" text="Jour" selected="true">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="vueGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="vueSemaineRadio" text="Semaine" toggleGroup="$vueGroup" />
+                  <RadioButton fx:id="vueMoisRadio" text="Mois" toggleGroup="$vueGroup" />
+                  
+                  <Region HBox.hgrow="ALWAYS" />
+                  
+                  <Button fx:id="precedentButton" text="◀" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5;" />
+                  <Button fx:id="aujourdhuiButton" text="Aujourd'hui" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5;" />
+                  <Button fx:id="suivantButton" text="▶" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5;" />
+               </HBox>
+               
+               <!-- Boutons d'action -->
+               <HBox spacing="10" alignment="CENTER_LEFT">
+                  <Button fx:id="verifierConflitsButton" text="Vérifier conflits" style="-fx-background-color: #F4A261; -fx-text-fill: #1A1F3A; -fx-padding: 8 15; -fx-background-radius: 5;" />
+                  <Button fx:id="exporterPDFButton" text="Exporter PDF" style="-fx-background-color: #E53E3E; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5;" />
+                  <Button fx:id="exporterExcelButton" text="Exporter Excel" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-padding: 8 15; -fx-background-radius: 5;" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="modifierButton" text="Modifier l'emploi du temps" style="-fx-background-color: #F4A261; -fx-text-fill: #1A1F3A; -fx-background-radius: 5; -fx-padding: 8 15;" visible="false" managed="false" />
+               </HBox>
+               
+               <Label fx:id="periodeLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+               <Label fx:id="totalCoursLabel" text="0 cours" style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" />
+               <Label fx:id="infoLabel" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+               
+               <!-- Légende -->
+               <HBox fx:id="legendeBox" spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 8 0; -fx-border-color: #E8EBFF; -fx-border-width: 0 0 1 0;">
+               </HBox>
+               
+               <!-- Grille de planning -->
+               <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 0;" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+                  <content>
+                     <GridPane fx:id="planningGrid" hgap="2.0" vgap="2.0" style="-fx-padding: 10;" />
+                  </content>
+               </ScrollPane>
+            </VBox>
+            
+            <!-- Partie droite : Détails -->
+            <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20;">
+               
+               <Label text="Détails des cours" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+               
+               <TableView fx:id="detailsTable" VBox.vgrow="ALWAYS" prefHeight="650">
+                  <columns>
+                     <TableColumn fx:id="jourColumn" text="Jour" prefWidth="80" />
+                     <TableColumn fx:id="heureColumn" text="Horaire" prefWidth="100" />
+                     <TableColumn fx:id="matiereColumn" text="Matière" prefWidth="120" />
+                     <TableColumn fx:id="enseignantColumn" text="Enseignant" prefWidth="120" />
+                     <TableColumn fx:id="salleColumn" text="Salle" prefWidth="80" />
+                     <TableColumn fx:id="classeColumn" text="Classe" prefWidth="120" />
+                     <TableColumn fx:id="coursColumn" text="Cours" prefWidth="60" visible="false" />
+                     <TableColumn fx:id="actionsColumn" text="" prefWidth="50" />
+                  </columns>
+                  <placeholder>
+                     <Label text="Aucun détail" style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" />
+                  </placeholder>
+               </TableView>
+            </VBox>
+         </items>
+      </SplitPane>
+   </content>
+</ScrollPane>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.GestionConflitsControleur">
+   
+   <content>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 25;" VBox.vgrow="ALWAYS">
+         
+         <!-- Statistiques -->
+         <HBox spacing="20.0" style="-fx-background-color: #F8F9FF; -fx-padding: 15 25; -fx-background-radius: 10;">
+            <VBox alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+               <Label text="Total conflits" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+               <Label fx:id="totalConflitsLabel" text="0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #E53E3E;" />
+            </VBox>
+            <Separator orientation="VERTICAL" />
+            <VBox alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+               <Label text="🏛️ Salles" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+               <Label fx:id="conflitsSalleLabel" text="0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #E53E3E;" />
+            </VBox>
+            <VBox alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+               <Label text="👨‍🏫 Enseignants" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+               <Label fx:id="conflitsEnseignantLabel" text="0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #F4A261;" />
+            </VBox>
+            <VBox alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+               <Label text="👥 Classes" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+               <Label fx:id="conflitsClasseLabel" text="0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+            </VBox>
+            <VBox alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+               <Label text="📅 Réservations" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+               <Label fx:id="conflitsReservationLabel" text="0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2DC653;" />
+            </VBox>
+         </HBox>
+         
+         <!-- Filtres -->
+         <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-background-color: #F8F9FF; -fx-padding: 12; -fx-background-radius: 8;">
+            <Label text="Filtres :" style="-fx-font-weight: bold;" />
+            <ComboBox fx:id="filtreTypeCombo" prefWidth="150" promptText="Type" />
+            <ComboBox fx:id="filtreStatutCombo" prefWidth="120" promptText="Statut" />
+            <TextField fx:id="rechercheField" promptText="Rechercher..." prefWidth="200" />
+            <Button fx:id="rechercherButton" text="🔍 Rechercher" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 15;" />
+            <Button fx:id="reinitialiserButton" text="Réinitialiser" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 15;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="rafraichirButton" text="🔄 Rafraîchir" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Button fx:id="toutReglerButton" text="🔧 Tout régler" style="-fx-background-color: #F4A261; -fx-text-fill: #1A1F3A; -fx-background-radius: 5; -fx-padding: 8 15;" />
+         </HBox>
+         
+         <!-- Tableau des conflits -->
+         <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+            <content>
+               <TableView fx:id="conflitsTable" prefHeight="650">
+                  <columns>
+                     <TableColumn fx:id="typeColumn" text="Type" prefWidth="120" />
+                     <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="450" />
+                     <TableColumn fx:id="sourceColumn" text="Source" prefWidth="150" />
+                     <TableColumn fx:id="dateColumn" text="Date" prefWidth="120" />
+                     <TableColumn fx:id="statutColumn" text="Statut" prefWidth="100" />
+                     <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="200" />
+                  </columns>
+                  <placeholder>
+                     <VBox alignment="CENTER" spacing="10" style="-fx-padding: 30;">
+                        <Label text="✅ Aucun conflit actif" style="-fx-font-size: 16px; -fx-text-fill: #2DC653; -fx-font-weight: bold;" />
+                        <Label text="Tous les emplois du temps et réservations sont cohérents." style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+                     </VBox>
+                  </placeholder>
+               </TableView>
+            </content>
+         </ScrollPane>
+         
+         <ProgressIndicator fx:id="chargementIndicator" maxWidth="50.0" maxHeight="50.0" visible="false" />
+         
+      </VBox>
+   </content>
+</ScrollPane>

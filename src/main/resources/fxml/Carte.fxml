@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.CarteControleur">
+   
+   <content>
+      <VBox spacing="8" style="-fx-background-color:#F8F9FF;-fx-padding:12;">
+         
+         <HBox spacing="10" alignment="CENTER_LEFT"
+               style="-fx-background-color:white;-fx-padding:10 14;-fx-background-radius:10;-fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+            <Label text="UFR :" style="-fx-font-weight:bold;-fx-text-fill:#1A1F3A;-fx-font-size:12px;"/>
+            <ComboBox fx:id="ufrCombo" promptText="Toutes les UFR" prefWidth="170"/>
+            <Label text="Bâtiment :" style="-fx-font-weight:bold;-fx-text-fill:#1A1F3A;-fx-font-size:12px;"/>
+            <ComboBox fx:id="batimentCombo" promptText="Tous les bâtiments" prefWidth="170"/>
+            <Label text="Étage :" style="-fx-font-weight:bold;-fx-text-fill:#1A1F3A;-fx-font-size:12px;"/>
+            <ComboBox fx:id="etageCombo" promptText="Tous" prefWidth="80"/>
+            <CheckBox fx:id="montreOccupeesCheck" text="Afficher occupées" style="-fx-font-size:12px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="itineraireButton" text="🧭 Itinéraire" style="-fx-background-color:#6B4226;-fx-text-fill:white;-fx-font-weight:bold;-fx-background-radius:6;-fx-padding:6 12;-fx-cursor:hand;"/>
+            <Button fx:id="zoomInButton" text="+" style="-fx-font-size:16px;-fx-font-weight:bold;-fx-background-color:#4361EE;-fx-text-fill:white;-fx-min-width:34;-fx-min-height:34;-fx-background-radius:6;-fx-cursor:hand;"/>
+            <Button fx:id="zoomOutButton" text="-" style="-fx-font-size:16px;-fx-font-weight:bold;-fx-background-color:#4361EE;-fx-text-fill:white;-fx-min-width:34;-fx-min-height:34;-fx-background-radius:6;-fx-cursor:hand;"/>
+            <Button fx:id="actualiserButton" text="🔄 Actualiser" style="-fx-background-color:#2DC653;-fx-text-fill:white;-fx-background-radius:6;-fx-padding:6 12;-fx-cursor:hand;"/>
+         </HBox>
+         
+         <VBox spacing="6" style="-fx-background-color:white;-fx-padding:10 14;-fx-background-radius:10;-fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+               <CheckBox fx:id="filtreParDateCheck" text="Filtrer par date / période" style="-fx-font-size:13px;-fx-font-weight:bold;-fx-text-fill:#4361EE;"/>
+               <Label fx:id="infoTempsReelLabel" text="Affichage temps réel - maintenant" style="-fx-font-size:11px;-fx-text-fill:#7B83C4;"/>
+               <Region HBox.hgrow="ALWAYS"/>
+               <Button fx:id="rechercherCarteButton" text="🔍 Rechercher" style="-fx-background-color:#4361EE;-fx-text-fill:white;-fx-background-radius:6;-fx-padding:6 14;-fx-font-weight:bold;-fx-cursor:hand;"/>
+            </HBox>
+            <HBox fx:id="panneauDateFiltre" spacing="14" alignment="CENTER_LEFT" visible="false" managed="false">
+               <RadioButton fx:id="radioJour" text="Un jour précis" selected="true" style="-fx-font-size:12px;"/>
+               <DatePicker fx:id="dateUniquePicker" prefWidth="148" promptText="Choisir un jour"/>
+               <Separator orientation="VERTICAL"/>
+               <RadioButton fx:id="radioIntervalle" text="Intervalle" style="-fx-font-size:12px;"/>
+               <Label text="Du :" style="-fx-font-size:12px;-fx-text-fill:#1A1F3A;"/>
+               <DatePicker fx:id="dateDebutPicker" prefWidth="130" promptText="Début" disable="true"/>
+               <Label text="au :" style="-fx-font-size:12px;-fx-text-fill:#1A1F3A;"/>
+               <DatePicker fx:id="dateFinPicker" prefWidth="130" promptText="Fin" disable="true"/>
+               <Separator orientation="VERTICAL"/>
+               <Label text="Heure :" style="-fx-font-size:12px;-fx-text-fill:#1A1F3A;"/>
+               <ComboBox fx:id="heureDebutCombo" prefWidth="90" promptText="Début"/>
+               <Label text="→" style="-fx-font-size:12px;"/>
+               <ComboBox fx:id="heureFinCombo" prefWidth="90" promptText="Fin"/>
+            </HBox>
+         </VBox>
+         
+         <HBox spacing="10" alignment="CENTER_LEFT">
+            <HBox spacing="8" alignment="CENTER_LEFT"
+                  style="-fx-background-color:white;-fx-padding:8 12;-fx-background-radius:8;" HBox.hgrow="ALWAYS">
+               <TextField fx:id="rechercheField" promptText="Rechercher une salle ou un bâtiment..."
+                          HBox.hgrow="ALWAYS" style="-fx-background-color:transparent;-fx-border-color:transparent;-fx-font-size:13px;"/>
+               <Button fx:id="rechercherButton" text="🔍" style="-fx-background-color:#4361EE;-fx-text-fill:white;-fx-background-radius:5;-fx-padding:5 12;-fx-cursor:hand;"/>
+               <Label fx:id="resultatRechercheLabel" style="-fx-font-size:11px;-fx-text-fill:#7B83C4;"/>
+            </HBox>
+            <HBox fx:id="legendeBox" spacing="16" alignment="CENTER_LEFT"
+                  style="-fx-background-color:white;-fx-padding:8 14;-fx-background-radius:8;"/>
+         </HBox>
+         
+         <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label fx:id="infoLabel" style="-fx-font-size:14px;-fx-font-weight:bold;-fx-text-fill:#4361EE;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="dateOccupationLabel" style="-fx-font-size:11px;-fx-text-fill:#7B83C4;"/>
+            <ProgressIndicator fx:id="chargementIndicator" maxWidth="28" maxHeight="28" visible="false"/>
+         </HBox>
+         
+         <ScrollPane fx:id="carteScroll" fitToWidth="true" VBox.vgrow="ALWAYS" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED" style="-fx-background-color:#F8F9FF;">
+            <content>
+               <GridPane fx:id="carteGrid" hgap="8" vgap="8" style="-fx-padding:15;"/>
+            </content>
+         </ScrollPane>
+         
+         <Label fx:id="legendeLabel" visible="false" managed="false"/>
+         <Label fx:id="chargementLabel" style="-fx-font-size:13px;-fx-text-fill:#7B83C4;" visible="false" managed="false"/>
+      </VBox>
+   </content>
+</ScrollPane>

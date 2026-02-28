@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.SignalementControleur">
+   
+   <content>
+      <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: #FBF8F3;">
+        <tabs>
+            <!-- Onglet Nouveau signalement -->
+            <Tab text="Nouveau signalement">
+               <content>
+                  <VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+                     
+                     <Label text="⚠️ Déclarer un incident ou une panne matérielle"
+                            style="-fx-font-size: 18px; -fx-font-weight: 900; -fx-text-fill: #3D261A;" />
+                     
+                     <GridPane hgap="15.0" vgap="14.0">
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="NEVER" minWidth="150.0" prefWidth="150.0" />
+                           <ColumnConstraints hgrow="ALWAYS" />
+                        </columnConstraints>
+                        
+                        <Label text="Salle concernée :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                        <ComboBox fx:id="salleCombo" promptText="Sélectionner une salle" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                                  style="-fx-padding: 6; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                        
+                        <Label text="Type d'incident :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                        <ComboBox fx:id="typeProblemeCombo" promptText="Choisir la nature de l'incident" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                  style="-fx-padding: 6; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                        
+                        <Label text="Degré d'urgence :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                        <ComboBox fx:id="prioriteCombo" promptText="Priorité" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                  style="-fx-padding: 6; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                        
+                        <Label text="Équipement lié :" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                        <ListView fx:id="equipementsListView" prefHeight="90" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                                  style="-fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                        
+                        <Label text="Photo justificative :" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                        <HBox spacing="15" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <StackPane prefWidth="100" prefHeight="75"
+                                      style="-fx-background-color: #F5EFEB; -fx-background-radius: 8; -fx-border-color: #D39A43; -fx-border-width: 1.5; -fx-border-radius: 8;">
+                              <ImageView fx:id="photoPreview" fitHeight="70" fitWidth="90" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/logo.png" />
+                                 </image>
+                              </ImageView>
+                           </StackPane>
+                           <VBox spacing="6" alignment="CENTER_LEFT">
+                              <Button fx:id="choisirPhotoButton" text="📷 Joindre photo de preuve"
+                                      style="-fx-background-color: #D39A43; -fx-text-fill: #3D261A; -fx-background-radius: 6; -fx-padding: 6 12; -fx-font-weight: 700; -fx-cursor: hand;" />
+                              <Button fx:id="supprimerPhotoButton" text="✕ Retirer la photo"
+                                      style="-fx-background-color: transparent; -fx-text-fill: #9E2A2B; -fx-font-size: 11px; -fx-cursor: hand;" visible="false" />
+                           </VBox>
+                        </HBox>
+                        
+                        <Label text="Description détaillée :" GridPane.columnIndex="0" GridPane.rowIndex="5" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" />
+                        <TextArea fx:id="descriptionArea" promptText="Décrivez le problème constaté (ex: câble HDMI sectionné, télécommande manquante, fuite climatiseur...)"
+                                  prefRowCount="4" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                                  style="-fx-padding: 6; -fx-background-radius: 8; -fx-border-color: #E6DCCD; -fx-border-radius: 8;" />
+                     </GridPane>
+                     
+                     <Label fx:id="salleInfoLabel" style="-fx-font-size: 12px; -fx-text-fill: #8C6D58;" />
+                     
+                     <HBox alignment="CENTER_RIGHT" spacing="12.0">
+                        <Button fx:id="annulerButton" text="Annuler"
+                                style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 20; -fx-font-weight: 600; -fx-cursor: hand;" />
+                        <Button fx:id="soumettreButton" text="Envoyer le signalement" defaultButton="true"
+                                style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 22; -fx-font-weight: 800; -fx-cursor: hand;" />
+                     </HBox>
+                  </VBox>
+               </content>
+            </Tab>
+            
+            <!-- Onglet Mes signalements -->
+            <Tab text="Mes signalements">
+               <content>
+                  <VBox spacing="14.0" style="-fx-background-color: white; -fx-padding: 22; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+                     <TableView fx:id="mesSignalementsTable" prefHeight="650" VBox.vgrow="ALWAYS">
+                        <columns>
+                           <TableColumn fx:id="photoMesColumn" text="Preuve" prefWidth="70" />
+                           <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                           <TableColumn fx:id="salleColumn" text="Salle" prefWidth="100" />
+                           <TableColumn fx:id="typeColumn" text="Type" prefWidth="180" />
+                           <TableColumn fx:id="prioriteColumn" text="Priorité" prefWidth="80" />
+                           <TableColumn fx:id="dateColumn" text="Date" prefWidth="120" />
+                           <TableColumn fx:id="statutColumn" text="Statut" prefWidth="100" />
+                           <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="90" />
+                        </columns>
+                        <placeholder>
+                           <Label text="Vous n'avez soumis aucun signalement" style="-fx-font-size: 14px; -fx-text-fill: #8C6D58;" />
+                        </placeholder>
+                     </TableView>
+                  </VBox>
+               </content>
+            </Tab>
+            
+            <!-- Onglet Tous les signalements (Admin/Gestionnaire) -->
+            <Tab text="Tous les signalements (Administration)">
+               <content>
+                  <VBox spacing="14.0" style="-fx-background-color: white; -fx-padding: 22; -fx-background-radius: 12; -fx-border-color: #E6DCCD; -fx-border-width: 1;">
+                     
+                     <!-- Statistiques d'incidents -->
+                     <HBox spacing="15.0" style="-fx-background-color: #F5EFEB; -fx-padding: 12 18; -fx-background-radius: 10;">
+                        <VBox alignment="CENTER" spacing="2" HBox.hgrow="ALWAYS">
+                           <Label text="Total signalements" style="-fx-font-size: 11px; -fx-text-fill: #8C6D58; -fx-font-weight: 600;" />
+                           <Label fx:id="totalSignalementsLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: 900; -fx-text-fill: #3D261A;" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="2" HBox.hgrow="ALWAYS">
+                           <Label text="En attente" style="-fx-font-size: 11px; -fx-text-fill: #8C6D58; -fx-font-weight: 600;" />
+                           <Label fx:id="enAttenteLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: 900; -fx-text-fill: #D39A43;" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="2" HBox.hgrow="ALWAYS">
+                           <Label text="En cours" style="-fx-font-size: 11px; -fx-text-fill: #8C6D58; -fx-font-weight: 600;" />
+                           <Label fx:id="enCoursLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: 900; -fx-text-fill: #6B4226;" />
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="2" HBox.hgrow="ALWAYS">
+                           <Label text="Résolus" style="-fx-font-size: 11px; -fx-text-fill: #8C6D58; -fx-font-weight: 600;" />
+                           <Label fx:id="resolusLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: 900; -fx-text-fill: #2E7D32;" />
+                        </VBox>
+                     </HBox>
+                     
+                     <!-- Filtres -->
+                     <HBox spacing="10.0" alignment="CENTER_LEFT">
+                        <ComboBox fx:id="filtreStatutCombo" promptText="Tous statuts" prefWidth="130.0" />
+                        <ComboBox fx:id="filtrePrioriteCombo" promptText="Toutes priorités" prefWidth="130.0" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="rafraichirButton" text="🔄 Actualiser"
+                                style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 7 16; -fx-font-weight: 700; -fx-cursor: hand;" />
+                     </HBox>
+                     
+                     <TableView fx:id="tousSignalementsTable" prefHeight="650" VBox.vgrow="ALWAYS">
+                        <columns>
+                           <TableColumn fx:id="photoTousColumn" text="Preuve" prefWidth="70" />
+                           <TableColumn fx:id="idAllColumn" text="ID" prefWidth="45" />
+                           <TableColumn fx:id="utilisateurColumn" text="Utilisateur" prefWidth="130" />
+                           <TableColumn fx:id="salleAllColumn" text="Salle" prefWidth="90" />
+                           <TableColumn fx:id="typeAllColumn" text="Type" prefWidth="160" />
+                           <TableColumn fx:id="prioriteAllColumn" text="Priorité" prefWidth="75" />
+                           <TableColumn fx:id="dateAllColumn" text="Date" prefWidth="95" />
+                           <TableColumn fx:id="statutAllColumn" text="Statut" prefWidth="95" />
+                           <TableColumn fx:id="actionsAllColumn" text="Actions" prefWidth="260" />
+                        </columns>
+                        <placeholder>
+                           <Label text="Aucun incident en cours" style="-fx-font-size: 14px; -fx-text-fill: #8C6D58;" />
+                        </placeholder>
+                     </TableView>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </content>
+</ScrollPane>

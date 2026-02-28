@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800" prefWidth="1300"
+            style="-fx-background-color:#FBF8F3;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.TableauBordGestionnaireControleur">
+
+   <!-- TOP BAR -->
+   <top>
+      <HBox alignment="CENTER_LEFT" spacing="14" minHeight="56" prefHeight="56"
+            style="-fx-background-color:#3D261A; -fx-padding:0 22; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 8, 0, 0, 2);">
+         
+         <ImageView fitHeight="36" preserveRatio="true">
+            <Image url="@../images/logo.png"/>
+         </ImageView>
+
+         <VBox alignment="CENTER_LEFT" spacing="1">
+            <Label text="SCHEDULER - Gestionnaire"
+                   style="-fx-font-size:15px; -fx-font-weight:800; -fx-text-fill:#F4E7D4;"/>
+            <Label text="Université Iba Der Thiam de Thiès"
+                   style="-fx-font-size:10px; -fx-text-fill:rgba(244,231,212,0.65);"/>
+         </VBox>
+
+         <Region HBox.hgrow="ALWAYS"/>
+
+         <Label fx:id="utilisateurLabel" text=""
+                style="-fx-text-fill:#F4E7D4; -fx-font-size:12px; -fx-font-weight:700;"/>
+         <Label fx:id="roleLabel" text=""
+                style="-fx-text-fill:#D7B88A; -fx-font-size:11px;"/>
+         <Label fx:id="dateLabel" text=""
+                style="-fx-text-fill:rgba(244,231,212,0.70); -fx-font-size:11px;"/>
+
+         <StackPane alignment="TOP_RIGHT">
+             <Button fx:id="notificationButton" text="🔔"
+                     style="-fx-background-color:rgba(255,255,255,0.12); -fx-cursor:hand;
+                            -fx-background-radius:50; -fx-min-width:38; -fx-min-height:38; -fx-font-size:14px;"/>
+             <Label fx:id="notificationBadge" text="0" visible="false" mouseTransparent="true"
+                    translateX="4" translateY="-4"
+                    style="-fx-background-color:#D39A43; -fx-text-fill:#24160F; -fx-font-size:10px;
+                           -fx-font-weight:900; -fx-min-width:18; -fx-min-height:18;
+                           -fx-background-radius:9; -fx-alignment:center; -fx-padding:1 4;"/>
+         </StackPane>
+
+         <Button fx:id="profilButton" text="Profil"
+                 style="-fx-background-color:transparent; -fx-text-fill:#F4E7D4;
+                        -fx-border-color:rgba(244,231,212,0.40); -fx-border-width:1;
+                        -fx-border-radius:8; -fx-background-radius:8;
+                        -fx-padding:6 12; -fx-font-size:12px; -fx-cursor:hand;"/>
+         <Button fx:id="retourButton" text="Retour"
+                 style="-fx-background-color:#6B4226; -fx-text-fill:white;
+                        -fx-background-radius:8; -fx-padding:6 12; -fx-cursor:hand;"/>
+         <Button fx:id="deconnexionButton" text="Déconnexion"
+                 style="-fx-background-color:#A42424; -fx-text-fill:white;
+                        -fx-background-radius:8; -fx-padding:6 12; -fx-cursor:hand;"/>
+      </HBox>
+   </top>
+
+   <!-- SIDEBAR GAUCHE NON-ÉCRASABLE (240px) -->
+   <left>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                  prefWidth="240" minWidth="240" maxWidth="250"
+                  style="-fx-background-color:#3D261A; -fx-background:#3D261A; -fx-border-color:transparent #EADBCE transparent transparent; -fx-border-width:0 1 0 0;">
+         <content>
+            <VBox spacing="6" style="-fx-padding:18 12; -fx-background-color:#3D261A;">
+               <VBox spacing="2">
+                  <Button fx:id="sidebarPlanningBtn" text="📅 Planning ▼"
+                          style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                                 -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                                 -fx-cursor:hand;"/>
+                  <VBox fx:id="sousMenuPlanning" spacing="2" style="-fx-padding:0 0 0 16;">
+                     <Button fx:id="sidebarCreerEdtBtn" text="➕ Créer un EDT"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6;
+                                    -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarListeEdtBtn" text="📋 Liste des EDT"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6;
+                                    -fx-cursor:hand;"/>
+                  </VBox>
+               </VBox>
+
+               <VBox spacing="2">
+                  <Button fx:id="sidebarGestionBtn" text="⚙️ Gestion ▼"
+                          style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                                 -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                                 -fx-cursor:hand;"/>
+                  <VBox fx:id="sousMenuGestion" spacing="2" style="-fx-padding:0 0 0 16;">
+                     <Button fx:id="sidebarMatieresBtn" text="📖 Matières"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6;
+                                    -fx-cursor:hand;"/>
+                     <Button fx:id="sidebarCoursBtn" text="📚 Cours"
+                             style="-fx-background-color:transparent; -fx-text-fill:#CBB298; -fx-alignment:CENTER_LEFT;
+                                    -fx-padding:8 12; -fx-font-size:12px; -fx-font-weight:500; -fx-background-radius:6;
+                                    -fx-cursor:hand;"/>
+                  </VBox>
+               </VBox>
+
+               <Button fx:id="sidebarReservationsBtn" text="📅 Réservations"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;"/>
+               <Button fx:id="sidebarCoursReportesBtn" text="🔄 Cours reportés"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;"/>
+               <Button fx:id="sidebarHistoriqueBtn" text="📜 Historique"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;"/>
+               <Button fx:id="sidebarRechercheBtn" text="🔍 Recherche"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;"/>
+               <Button fx:id="sidebarConflitsBtn" text="⚠️ Conflits"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;"/>
+               <Button fx:id="sidebarCarteBtn" text="🗺️ Carte"
+                       style="-fx-background-color:transparent; -fx-text-fill:#D7B88A; -fx-alignment:CENTER_LEFT;
+                              -fx-padding:10 14; -fx-font-size:13px; -fx-font-weight:600; -fx-background-radius:8;
+                              -fx-cursor:hand;"/>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </left>
+
+   <!-- CONTENU CENTRAL DYNAMIQUE -->
+   <center>
+      <StackPane fx:id="contenuPrincipal" style="-fx-background-color:#FBF8F3;">
+         <VBox alignment="CENTER" spacing="24" style="-fx-padding:60; -fx-background-color:#FBF8F3;">
+            <VBox alignment="CENTER" spacing="8">
+               <Label text="📅 Espace Planification &amp; Gestion"
+                      style="-fx-font-size:26px; -fx-font-weight:900; -fx-text-fill:#3D261A;"/>
+               <Label text="Sélectionnez une option dans le menu de gauche ou créez un nouvel emploi du temps"
+                      style="-fx-font-size:14px; -fx-text-fill:#7A665A;"/>
+            </VBox>
+            
+            <HBox alignment="CENTER" spacing="16">
+               <Button fx:id="btnOuvrirNouvelEdt" text="➕ Créer un emploi du temps"
+                       style="-fx-background-color:#6B4226; -fx-text-fill:white;
+                              -fx-background-radius:10; -fx-padding:14 36;
+                              -fx-font-size:14px; -fx-font-weight:700; -fx-cursor:hand;
+                              -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.18), 8, 0, 0, 3);"/>
+            </HBox>
+         </VBox>
+      </StackPane>
+   </center>
+</BorderPane>

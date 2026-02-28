@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.LoginControleur"
+            style="-fx-background-color: linear-gradient(to bottom right, #3D261A, #543310, #7A4E2D);">
+
+   <VBox alignment="CENTER" spacing="0" maxWidth="460"
+         style="-fx-background-color: white; -fx-background-radius: 20;
+                -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.30), 30, 0, 0, 8);
+                -fx-border-color: rgba(211,154,67,0.35); -fx-border-width: 1.5; -fx-border-radius: 20;">
+
+      <!-- En-tête prestigieux avec Logo -->
+      <VBox alignment="CENTER" spacing="10"
+            style="-fx-background-color: linear-gradient(to right, #3D261A, #543310);
+                   -fx-background-radius: 19 19 0 0; -fx-padding: 30 40 24 40;
+                   -fx-border-color: transparent transparent #D39A43 transparent; -fx-border-width: 0 0 2 0;">
+         <ImageView fitHeight="48" fitWidth="120" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../images/logo.png" />
+            </image>
+         </ImageView>
+         <Label text="UNIV-SCHEDULER"
+                style="-fx-font-size: 26px; -fx-font-weight: 900; -fx-text-fill: #FBF8F3; -fx-letter-spacing: 1px;" />
+         <Label text="Gestion Universitaire des Emplois du Temps &amp; Espaces"
+                style="-fx-font-size: 11px; -fx-text-fill: #D39A43; -fx-font-weight: 600;" />
+      </VBox>
+
+      <!-- Formulaire -->
+      <VBox spacing="16" style="-fx-padding: 32 40 28 40; -fx-background-color: white;">
+
+         <Label fx:id="messageLabel" text="" wrapText="true" maxWidth="380"
+                style="-fx-padding: 8 12; -fx-background-radius: 8; -fx-font-size: 12px;"
+                visible="false" managed="false" />
+
+         <!-- Email -->
+         <VBox spacing="6">
+            <Label text="Adresse email institutionnelle"
+                   style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #3D261A;" />
+            <TextField fx:id="emailField" promptText="nom.prenom@univ-thies.sn"
+                       style="-fx-font-size: 13px; -fx-padding: 10 14; -fx-background-radius: 8;
+                              -fx-border-color: #E6DCCD; -fx-border-width: 1.5; -fx-border-radius: 8;
+                              -fx-background-color: #FDFCF9;" />
+         </VBox>
+
+         <!-- Mot de passe -->
+         <VBox spacing="6">
+            <HBox alignment="CENTER_LEFT">
+               <Label text="Mot de passe"
+                      style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #3D261A;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Hyperlink fx:id="motDePasseOublieLink" text="Mot de passe oublié ?"
+                          style="-fx-font-size: 11px; -fx-text-fill: #9E5D32; -fx-border-color: transparent; -fx-cursor: hand;" />
+            </HBox>
+            <PasswordField fx:id="passwordField" promptText="••••••••"
+                           style="-fx-font-size: 13px; -fx-padding: 10 14; -fx-background-radius: 8;
+                                  -fx-border-color: #E6DCCD; -fx-border-width: 1.5; -fx-border-radius: 8;
+                                  -fx-background-color: #FDFCF9;" />
+         </VBox>
+
+         <!-- Bouton Connexion -->
+         <Button fx:id="loginButton" text="Se connecter" defaultButton="true" maxWidth="Infinity"
+                 style="-fx-background-color: linear-gradient(to right, #3D261A, #6B4226);
+                        -fx-text-fill: #FBF8F3; -fx-font-size: 14px; -fx-font-weight: 800;
+                        -fx-background-radius: 8; -fx-padding: 12 0; -fx-cursor: hand;
+                        -fx-effect: dropshadow(three-pass-box, rgba(61,38,26,0.25), 8, 0, 0, 3);" />
+
+         <HBox alignment="CENTER">
+            <ProgressIndicator fx:id="loadingIndicator" maxWidth="28" maxHeight="28"
+                               visible="false" managed="false" />
+         </HBox>
+
+         <Separator style="-fx-opacity: 0.6;" />
+
+         <HBox alignment="CENTER" spacing="6">
+            <Label text="Pas encore de compte ?" style="-fx-font-size: 13px; -fx-text-fill: #8C6D58;" />
+            <Hyperlink fx:id="inscriptionLink" text="Faire une demande"
+                       style="-fx-font-size: 13px; -fx-text-fill: #9E5D32; -fx-font-weight: 800;
+                              -fx-border-color: transparent; -fx-cursor: hand;" />
+         </HBox>
+      </VBox>
+
+      <!-- Pied -->
+      <HBox alignment="CENTER"
+            style="-fx-background-color: #FBF8F3; -fx-background-radius: 0 0 19 19;
+                   -fx-padding: 12 40; -fx-border-color: #E6DCCD; -fx-border-width: 1 0 0 0;">
+         <Label text="Université Iba Der Thiam de Thiès • UIDT"
+                style="-fx-font-size: 11px; -fx-text-fill: #8C6D58; -fx-font-weight: 600;" />
+      </HBox>
+   </VBox>
+</StackPane>

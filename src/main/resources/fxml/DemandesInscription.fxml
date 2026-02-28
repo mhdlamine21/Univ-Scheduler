@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.DemandesInscriptionControleur">
+   
+   <content>
+      <VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 25;" VBox.vgrow="ALWAYS">
+         
+         <!-- Filtres et actions massives -->
+         <HBox spacing="15.0" alignment="CENTER_LEFT">
+            <Label text="Filtres :" style="-fx-font-weight: bold;" />
+            <ComboBox fx:id="filtreStatutCombo" promptText="Statut" prefWidth="150.0" />
+            <TextField fx:id="rechercheField" promptText="Nom, prénom ou email..." prefWidth="300" />
+            <Button fx:id="rechercherButton" text="Rechercher" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Button fx:id="reinitialiserButton" text="Réinitialiser" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <Button fx:id="toutValiderButton" text="✓✓ Tout valider" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Button fx:id="toutRefuserButton" text="✗✗ Tout refuser" style="-fx-background-color: #E53E3E; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Button fx:id="rafraichirButton" text="Rafraîchir" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+         </HBox>
+         
+         <!-- Tableau -->
+         <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+            <content>
+               <TableView fx:id="demandeTable" prefHeight="700">
+                  <columns>
+                     <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                     <TableColumn fx:id="nomColumn" text="Nom" prefWidth="120" />
+                     <TableColumn fx:id="prenomColumn" text="Prénom" prefWidth="120" />
+                     <TableColumn fx:id="emailColumn" text="Email" prefWidth="200" />
+                     <TableColumn fx:id="roleColumn" text="Rôle" prefWidth="100" />
+                     <TableColumn fx:id="gradeColumn" text="Grade" prefWidth="80" />
+                     <TableColumn fx:id="detailsColumn" text="Détails" prefWidth="150" />
+                     <TableColumn fx:id="dateColumn" text="Date" prefWidth="100" />
+                     <TableColumn fx:id="statutColumn" text="Statut" prefWidth="100" />
+                     <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150" />
+                  </columns>
+                  <placeholder>
+                     <Label text="Aucune demande d'inscription" style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" />
+                  </placeholder>
+               </TableView>
+            </content>
+         </ScrollPane>
+         
+         <StackPane>
+            <ProgressIndicator fx:id="chargementIndicator" visible="false" maxWidth="50" maxHeight="50" />
+         </StackPane>
+      </VBox>
+   </content>
+</ScrollPane>

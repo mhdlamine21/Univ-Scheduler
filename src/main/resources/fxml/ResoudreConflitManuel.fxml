@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;" 
+      prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="scheduler.controleur.ResoudreConflitManuelControleur">
+   
+   <Label text="⚡ Résolution manuelle du conflit" style="-fx-font-size: 18px; -fx-font-weight: 800; -fx-text-fill: #3D261A;" />
+   
+   <Label fx:id="conflitLabel" wrapText="true" style="-fx-text-fill: #9E2A2B; -fx-font-weight: bold; -fx-background-color: #FDF2F2; -fx-padding: 10; -fx-background-radius: 8; -fx-border-color: #F5C6CB; -fx-border-width: 1; -fx-border-radius: 8;" />
+   
+   <Separator />
+   
+   <Label fx:id="coursInfoLabel" style="-fx-font-size: 12px; -fx-text-fill: #6B4226;" />
+   
+   <GridPane hgap="10.0" vgap="10.0">
+      <columnConstraints>
+         <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+         <ColumnConstraints hgrow="ALWAYS" />
+      </columnConstraints>
+      
+      <Label text="Jour :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      <ComboBox fx:id="jourCombo" prefWidth="200" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      
+      <Label text="Heure début :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <ComboBox fx:id="heureDebutCombo" prefWidth="120" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+      <Label text="Durée (h) :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      <Spinner fx:id="dureeSpinner" prefWidth="100" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      
+      <Label text="Salle :" style="-fx-font-weight: bold; -fx-text-fill: #3D261A;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+      <ComboBox fx:id="salleCombo" prefWidth="250" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   </GridPane>
+   
+   <Label fx:id="disponibiliteLabel" style="-fx-font-size: 12px;" />
+   
+   <HBox spacing="10.0" alignment="CENTER_RIGHT">
+      <Button fx:id="annulerButton" text="Annuler" style="-fx-background-color: #8C6D58; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;" />
+      <Button fx:id="verifierButton" text="⚡ Vérifier" style="-fx-background-color: #D39A43; -fx-text-fill: #3D261A; -fx-background-radius: 6; -fx-padding: 8 16; -fx-font-weight: bold; -fx-cursor: hand;" />
+      <Button fx:id="appliquerButton" text="Appliquer" disable="true" style="-fx-background-color: #2E7D32; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 18; -fx-font-weight: bold; -fx-cursor: hand;" />
+   </HBox>
+   
+   <ProgressIndicator fx:id="chargementIndicator" maxWidth="30.0" maxHeight="30.0" visible="false" />
+   
+</VBox>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.RapportControleur">
+   
+   <content>
+      <VBox spacing="18.0" style="-fx-background-color: white; -fx-padding: 22 28;">
+
+         <!-- Filtres -->
+         <GridPane hgap="14.0" vgap="12.0">
+            <columnConstraints>
+               <ColumnConstraints hgrow="NEVER" minWidth="75.0"/>
+               <ColumnConstraints hgrow="ALWAYS"/>
+               <ColumnConstraints hgrow="NEVER" minWidth="75.0"/>
+               <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Type :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="typeRapportCombo" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="UFR :" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="ufrCombo" prefWidth="220.0" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+            <Label text="Classe :" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="classeCombo" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Période :" GridPane.columnIndex="2" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+            <HBox spacing="5.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <DatePicker fx:id="dateDebutPicker" prefWidth="130"/>
+               <Label text="au"/>
+               <DatePicker fx:id="dateFinPicker" prefWidth="130"/>
+            </HBox>
+
+            <Label text="Sem. début :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+            <DatePicker fx:id="semaineDebutPicker" prefWidth="130" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Label text="Sem. fin :" GridPane.columnIndex="2" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+            <DatePicker fx:id="semaineFinPicker" prefWidth="130" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+         </GridPane>
+
+         <!-- Boutons rapides -->
+         <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <Button fx:id="aujourdhuiButton" text="Aujourd'hui" style="-fx-background-color: #3D261A; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 7 14; -fx-cursor: hand; -fx-font-weight: bold;"/>
+            <Button fx:id="cetteSemaineButton" text="Cette semaine" style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 7 14; -fx-cursor: hand; -fx-font-weight: bold;"/>
+            <Button fx:id="ceMoisButton" text="Ce mois" style="-fx-background-color: #6B4226; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 7 14; -fx-cursor: hand; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <ProgressIndicator fx:id="chargementIndicator" maxWidth="28.0" maxHeight="28.0" visible="false"/>
+            <Button fx:id="genererButton" text="🔄 Actualiser en Direct" defaultButton="true" style="-fx-background-color: #D39A43; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 9 18; -fx-cursor: hand;"/>
+            <Button fx:id="exporterPDFButton" text="📄 Exporter PDF" style="-fx-background-color: #A93226; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 9 16; -fx-cursor: hand;"/>
+            <Button fx:id="exporterExcelButton" text="📊 Exporter Excel" style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 9 16; -fx-cursor: hand;"/>
+         </HBox>
+
+         <!-- TabPane -->
+         <TabPane fx:id="rapportTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" minHeight="700">
+            <tabs>
+
+               <!-- Onglet Résumé -->
+               <Tab text="Résumé &amp; Métriques Clés">
+                  <content>
+                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                        <content>
+                           <GridPane hgap="22.0" vgap="22.0" style="-fx-background-color: white; -fx-padding: 28;">
+                              <columnConstraints>
+                                 <ColumnConstraints percentWidth="33.33"/>
+                                 <ColumnConstraints percentWidth="33.33"/>
+                                 <ColumnConstraints percentWidth="33.33"/>
+                              </columnConstraints>
+
+                              <VBox alignment="CENTER" style="-fx-background-color: #FDFBF7; -fx-padding: 26; -fx-background-radius: 12; -fx-border-color: #EBDBC8; -fx-border-width: 1.5; -fx-border-radius: 12;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                 <Label text="Total cours dispensés" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                                 <Label fx:id="totalCoursLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: #3D261A;"/>
+                              </VBox>
+                              <VBox alignment="CENTER" style="-fx-background-color: #FDFBF7; -fx-padding: 26; -fx-background-radius: 12; -fx-border-color: #EBDBC8; -fx-border-width: 1.5; -fx-border-radius: 12;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                 <Label text="Salles actives utilisées" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                                 <Label fx:id="totalSallesLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: #27AE60;"/>
+                              </VBox>
+                              <VBox alignment="CENTER" style="-fx-background-color: #FDFBF7; -fx-padding: 26; -fx-background-radius: 12; -fx-border-color: #EBDBC8; -fx-border-width: 1.5; -fx-border-radius: 12;" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                 <Label text="Taux d'occupation global" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                                 <Label fx:id="tauxOccupationLabel" text="0%" style="-fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: #D39A43;"/>
+                              </VBox>
+
+                              <VBox alignment="CENTER" style="-fx-background-color: #FDFBF7; -fx-padding: 26; -fx-background-radius: 12; -fx-border-color: #EBDBC8; -fx-border-width: 1.5; -fx-border-radius: 12;" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                 <Label text="Enseignants mobilisés" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                                 <Label fx:id="totalEnseignantsLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: #3D261A;"/>
+                              </VBox>
+                              <VBox alignment="CENTER" style="-fx-background-color: #FDFBF7; -fx-padding: 26; -fx-background-radius: 12; -fx-border-color: #EBDBC8; -fx-border-width: 1.5; -fx-border-radius: 12;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <Label text="Étudiants inscrits" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                                 <Label fx:id="totalEtudiantsLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                              </VBox>
+                              <VBox alignment="CENTER" style="-fx-background-color: #FDFBF7; -fx-padding: 26; -fx-background-radius: 12; -fx-border-color: #EBDBC8; -fx-border-width: 1.5; -fx-border-radius: 12;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <Label text="Réservations ponctuelles" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #6B4226;"/>
+                                 <Label fx:id="totalReservationsLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: bold; -fx-text-fill: #C0392B;"/>
+                              </VBox>
+                           </GridPane>
+                        </content>
+                     </ScrollPane>
+                  </content>
+               </Tab>
+
+               <!-- Onglet Graphiques -->
+               <Tab text="Graphiques">
+                  <content>
+                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" style="-fx-background-color: white;">
+                        <content>
+                           <VBox spacing="40.0" style="-fx-background-color: white; -fx-padding: 25 30;">
+
+                              <!-- BarChart occupation -->
+                              <VBox spacing="8.0" style="-fx-background-color: #F8F9FF; -fx-padding: 22; -fx-background-radius: 14; -fx-border-color: #E8EBFF; -fx-border-width: 1; -fx-border-radius: 14;">
+                                 <Label text="Occupation des salles par créneau horaire" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                                 <Label text="Nombre de cours planifiés par tranche de 2h sur la période sélectionnée" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;"/>
+                                 <BarChart fx:id="occupationChart" prefHeight="520" minHeight="480" maxWidth="1500.0" animated="false" legendVisible="false" style="-fx-background-color: white;">
+                                    <xAxis><CategoryAxis fx:id="occupationXAxis" label="Créneaux horaires"/></xAxis>
+                                    <yAxis><NumberAxis fx:id="occupationYAxis" label="Nombre de cours" lowerBound="0" upperBound="10" tickUnit="1" autoRanging="false"/></yAxis>
+                                 </BarChart>
+                              </VBox>
+
+                              <!-- PieChart répartition types -->
+                              <VBox spacing="8.0" style="-fx-background-color: #F8F9FF; -fx-padding: 22; -fx-background-radius: 14; -fx-border-color: #E8EBFF; -fx-border-width: 1; -fx-border-radius: 14;">
+                                 <Label text="Répartition par type de cours" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                                 <Label text="CM = Cours Magistral   TD = Travaux Dirigés   TP = Travaux Pratiques" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;"/>
+                                 <PieChart fx:id="repartitionChart" prefHeight="520" minHeight="460" maxWidth="900.0" animated="false" labelsVisible="true" legendVisible="true"/>
+                              </VBox>
+
+                              <!-- LineChart évolution mensuelle -->
+                              <VBox spacing="8.0" style="-fx-background-color: #F8F9FF; -fx-padding: 22; -fx-background-radius: 14; -fx-border-color: #E8EBFF; -fx-border-width: 1; -fx-border-radius: 14;">
+                                 <Label text="Évolution mensuelle du taux d'occupation (12 derniers mois)" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                                 <Label text="Taux d'occupation des salles en pourcentage pour chaque mois" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;"/>
+                                 <LineChart fx:id="tendanceChart" prefHeight="520" minHeight="480" maxWidth="1500.0" animated="false" legendVisible="true" style="-fx-background-color: white;">
+                                    <xAxis><CategoryAxis fx:id="tendanceXAxis" label="Mois"/></xAxis>
+                                    <yAxis><NumberAxis fx:id="tendanceYAxis" label="Taux d'occupation (%)" lowerBound="0" upperBound="10" tickUnit="1" autoRanging="false"/></yAxis>
+                                 </LineChart>
+                              </VBox>
+
+                           </VBox>
+                        </content>
+                     </ScrollPane>
+                  </content>
+               </Tab>
+
+               <!-- Onglet Détails -->
+               <Tab text="Détails">
+                  <content>
+                     <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 22 28;">
+                        <Label text="Salles - détails d'occupation sur la période" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3D261A;"/>
+                        <TableView fx:id="detailsTable" prefHeight="700" VBox.vgrow="ALWAYS">
+                           <columns>
+                              <TableColumn fx:id="salleColumn"    text="Salle"            prefWidth="130"/>
+                              <TableColumn fx:id="typeColumn"     text="Type"             prefWidth="110"/>
+                              <TableColumn fx:id="capaciteColumn" text="Capacité"         prefWidth="90"/>
+                              <TableColumn fx:id="tauxColumn"     text="Taux occupation"  prefWidth="140"/>
+                              <TableColumn fx:id="heuresColumn"   text="Heures utilisées" prefWidth="130"/>
+                              <TableColumn fx:id="statutColumn"   text="Statut"           prefWidth="130"/>
+                           </columns>
+                           <placeholder>
+                              <Label text="Aucune donnée - générez un rapport d'abord" style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;"/>
+                           </placeholder>
+                        </TableView>
+                        <HBox spacing="30.0" alignment="CENTER">
+                           <Label text="● Normale  (&lt; 70%)" style="-fx-font-size: 12px; -fx-text-fill: #2DC653; -fx-font-weight: bold;"/>
+                           <Label text="● Sous-utilisée  (&lt; 20%)" style="-fx-font-size: 12px; -fx-text-fill: #F4A261; -fx-font-weight: bold;"/>
+                           <Label text="● Surchargée  (&gt; 70%)" style="-fx-font-size: 12px; -fx-text-fill: #E53E3E; -fx-font-weight: bold;"/>
+                        </HBox>
+                     </VBox>
+                  </content>
+               </Tab>
+
+               <!-- Onglet 4: Audit & Traçabilité Légale -->
+               <Tab text="🛡️ Audit &amp; Sécurité">
+                  <content>
+                     <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 22 28;">
+                        <HBox spacing="15.0" alignment="CENTER_LEFT">
+                           <VBox spacing="3.0">
+                              <Label text="Registre Légal des Événements Système (audit_logs)" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #3D261A;"/>
+                              <Label text="Historique horodaté, immuable et traçable de toutes les actions sensibles." style="-fx-font-size: 12px; -fx-text-fill: #6B4226;"/>
+                           </VBox>
+                           <Region HBox.hgrow="ALWAYS"/>
+                           <Button fx:id="rafraichirAuditButton" text="🔄 Rafraîchir les Logs" style="-fx-background-color: #3D261A; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 8 16; -fx-cursor: hand;"/>
+                        </HBox>
+                        <TableView fx:id="auditTable" prefHeight="700" VBox.vgrow="ALWAYS">
+                           <columns>
+                              <TableColumn fx:id="auditTimestampColumn" text="Date &amp; Heure" prefWidth="150"/>
+                              <TableColumn fx:id="auditUserColumn"      text="Utilisateur"    prefWidth="180"/>
+                              <TableColumn fx:id="auditRoleColumn"      text="Rôle"           prefWidth="100"/>
+                              <TableColumn fx:id="auditActionColumn"    text="Action"         prefWidth="160"/>
+                              <TableColumn fx:id="auditEntiteColumn"    text="Entité"         prefWidth="100"/>
+                              <TableColumn fx:id="auditIpColumn"        text="Hôte / IP"      prefWidth="120"/>
+                              <TableColumn fx:id="auditDetailsColumn"   text="Détails de l'opération" prefWidth="350"/>
+                           </columns>
+                           <placeholder>
+                              <Label text="Aucun log d'audit enregistré pour le moment." style="-fx-font-size: 13px; -fx-text-fill: #8D6E63;"/>
+                           </placeholder>
+                        </TableView>
+                     </VBox>
+                  </content>
+               </Tab>
+
+            </tabs>
+         </TabPane>
+
+      </VBox>
+   </content>
+</ScrollPane>

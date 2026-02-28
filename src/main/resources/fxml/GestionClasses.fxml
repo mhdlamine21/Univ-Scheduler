@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- ✅ ScrollPane à l'extérieur pour le défilement global -->
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.GestionClassesControleur">
+   
+   <content>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 15;">
+         
+         <!-- ✅ PAS D'EN-TÊTE ICI (déjà dans le parent) -->
+         
+         <!-- Formulaire -->
+         <VBox spacing="10.0" style="-fx-background-color: #F8F9FF; -fx-padding: 15; -fx-background-radius: 8;">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Informations classe" />
+            
+            <GridPane hgap="10.0" vgap="8.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               
+               <Label style="-fx-font-weight: bold;" text="UFR :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <ComboBox fx:id="ufrCombo" promptText="Sélectionner une UFR" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+               
+               <Label style="-fx-font-weight: bold;" text="Intitulé :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="intituleField" promptText="ex: L2 Informatique" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+               
+               <Label style="-fx-font-weight: bold;" text="Filière :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <TextField fx:id="filiereField" promptText="ex: Informatique" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+               
+               <Label style="-fx-font-weight: bold;" text="Niveau :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+               <ComboBox fx:id="niveauCombo" promptText="Niveau" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               
+               <Label style="-fx-font-weight: bold;" text="Année scolaire :" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+               <TextField fx:id="anneeField" promptText="ex: 2024-2025" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+               
+               <Label style="-fx-font-weight: bold;" text="Effectif :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+               <Spinner fx:id="effectifSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               
+               <Label style="-fx-font-weight: bold;" text="Groupes :" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+               <Spinner fx:id="groupesSpinner" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+            </GridPane>
+            
+            <CheckBox fx:id="activeCheck" selected="true" text="Classe active" />
+            
+            <HBox alignment="CENTER_RIGHT" spacing="8.0">
+               <Button fx:id="annulerButton" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 12;" text="Annuler" />
+               <Button fx:id="ajouterButton" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 12;" text="Ajouter" />
+               <Button fx:id="modifierButton" disable="true" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 12;" text="Modifier" />
+               <Button fx:id="supprimerButton" disable="true" style="-fx-background-color: #E53E3E; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 6 12;" text="Supprimer" />
+               <Button fx:id="archiverButton" disable="true" style="-fx-background-color: #F4A261; -fx-text-fill: #1A1F3A; -fx-background-radius: 5; -fx-padding: 6 12;" text="Archiver" />
+            </HBox>
+         </VBox>
+         
+         <!-- Filtres -->
+         <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #F8F9FF; -fx-padding: 10; -fx-background-radius: 8;">
+            <Label style="-fx-font-weight: bold;" text="Filtres :" />
+            <TextField fx:id="rechercheField" prefWidth="150" promptText="Rechercher..." />
+            <ComboBox fx:id="filtreNiveauCombo" prefWidth="100" promptText="Niveau" />
+            <ComboBox fx:id="filtreAnneeCombo" prefWidth="100" promptText="Année" />
+            <ComboBox fx:id="filtreUfrCombo" prefWidth="150" promptText="UFR" />
+            <CheckBox fx:id="filtreActifCheck" selected="true" text="Actives" />
+            <Button fx:id="rechercherButton" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 5 10;" text="Rechercher" />
+            <Button fx:id="reinitialiserButton" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 5 10;" text="Réinitialiser" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="rafraichirButton" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 5 10;" text="Rafraîchir" />
+         </HBox>
+         
+         <Label fx:id="messageLabel" style="-fx-text-fill: #E53E3E;" visible="false" />
+         
+         <!-- Tableau -->
+         <VBox spacing="5.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" text="Liste des classes" />
+            
+            <TableView fx:id="classeTable" prefHeight="750" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="idColumn" prefWidth="40" text="ID" />
+                  <TableColumn fx:id="intituleColumn" prefWidth="180" text="Intitulé" />
+                  <TableColumn fx:id="filiereColumn" prefWidth="157.60000610351562" text="Filière" />
+                  <TableColumn fx:id="niveauColumn" prefWidth="79.20001220703125" text="Niveau" />
+                  <TableColumn fx:id="anneeColumn" prefWidth="103.19998168945312" text="Année" />
+                  <TableColumn fx:id="ufrColumn" prefWidth="131.199951171875" text="UFR" />
+                  <TableColumn fx:id="effectifColumn" prefWidth="121.5999755859375" text="Effectif" />
+                  <TableColumn fx:id="groupesColumn" prefWidth="64.0" text="Groupes" />
+                  <TableColumn fx:id="statutColumn" prefWidth="127.9998779296875" text="Statut" />
+                  <TableColumn fx:id="actionsColumn" prefWidth="159.20001220703125" text="Actions" />
+               </columns>
+               <placeholder>
+                  <Label style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" text="Aucune classe" />
+               </placeholder>
+            </TableView>
+            
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+               <Label fx:id="totalClassesLabel" style="-fx-font-size: 11px; -fx-text-fill: #7B83C4;" text="0 classe(s)" />
+               <ProgressIndicator fx:id="chargementIndicator" maxHeight="20.0" maxWidth="20.0" visible="false" />
+            </HBox>
+         </VBox>
+         
+      </VBox>
+   </content>
+</ScrollPane>

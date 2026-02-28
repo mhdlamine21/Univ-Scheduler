@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.HistoriqueReservationControleur">
+   
+   <content>
+      <VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 25;" VBox.vgrow="ALWAYS">
+         
+         <!-- Filtres et boutons d'export -->
+         <HBox spacing="15.0" alignment="CENTER_LEFT">
+            <Label text="Filtres :" style="-fx-font-weight: bold;" />
+            <ComboBox fx:id="filtreActionCombo" promptText="Action" prefWidth="150.0" />
+            <Label text="Du :" />
+            <DatePicker fx:id="dateDebutPicker" />
+            <Label text="Au :" />
+            <DatePicker fx:id="dateFinPicker" />
+            <Button fx:id="rechercherButton" text="Rechercher" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Button fx:id="reinitialiserButton" text="Réinitialiser" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <Button fx:id="exporterPDFButton" text="Exporter PDF" style="-fx-background-color: #E53E3E; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" />
+            <Button fx:id="exporterExcelButton" text="Exporter Excel" style="-fx-background-color: #F4A261; -fx-text-fill: #1A1F3A; -fx-background-radius: 5; -fx-padding: 8 15;" />
+         </HBox>
+         
+         <!-- Statistiques -->
+         <HBox alignment="CENTER_RIGHT">
+            <Label fx:id="totalLabel" text="Total: 0" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+         </HBox>
+         
+         <!-- Tableau -->
+         <StackPane VBox.vgrow="ALWAYS">
+            <TableView fx:id="historiqueTable" prefHeight="700" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+                  <TableColumn fx:id="dateColumn" text="Date" prefWidth="150" />
+                  <TableColumn fx:id="actionColumn" text="Action" prefWidth="150" />
+                  <TableColumn fx:id="detailsColumn" text="Détails" prefWidth="300" />
+                  <TableColumn fx:id="utilisateurColumn" text="Utilisateur" prefWidth="150" />
+               </columns>
+               <placeholder>
+                  <Label text="Aucun historique" style="-fx-font-size: 14px; -fx-text-fill: #7B83C4;" />
+               </placeholder>
+            </TableView>
+            <ProgressIndicator fx:id="chargementIndicator" visible="false" />
+         </StackPane>
+      </VBox>
+   </content>
+</ScrollPane>

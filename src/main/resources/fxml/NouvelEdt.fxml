@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="scheduler.controleur.NouvelEdtControleur">
+
+   <content>
+      <BorderPane prefHeight="800" prefWidth="1100">
+         
+         <!-- BARRE DU HAUT -->
+         <top>
+            <HBox alignment="CENTER_LEFT" spacing="10" minHeight="52" prefHeight="52"
+                  style="-fx-background-color:#1A1F3A;-fx-padding:0 20;">
+               <VBox alignment="CENTER_LEFT" spacing="1">
+                  <Label text="Nouvel Emploi du Temps" style="-fx-font-size:15px;-fx-font-weight:800;-fx-text-fill:#EEF0FF;"/>
+                  <Label fx:id="etapeTitreLabel" text="- Étape 1/5 - Type &amp; Période" style="-fx-font-size:10px;-fx-text-fill:rgba(238,240,255,0.7);"/>
+               </VBox>
+               <Region HBox.hgrow="ALWAYS"/>
+               <Label fx:id="utilisateurLabel" text="" style="-fx-text-fill:#EEF0FF;-fx-font-size:12px;-fx-font-weight:600;"/>
+               <Label fx:id="roleLabel" text="" style="-fx-text-fill:#7B83C4;-fx-font-size:11px;"/>
+               <Label fx:id="dateLabel" text="" style="-fx-text-fill:rgba(238,240,255,0.6);-fx-font-size:11px;"/>
+               <Button fx:id="annulerButton" text="✕ Annuler" style="-fx-background-color:#E53E3E;-fx-text-fill:white;-fx-background-radius:6;-fx-padding:6 14;-fx-font-size:12px;-fx-font-weight:600;-fx-cursor:hand;"/>
+            </HBox>
+         </top>
+
+         <center>
+            <VBox spacing="0" style="-fx-background-color:#F8F9FF;">
+
+               <!-- BARRE DE PROGRESSION -->
+               <HBox alignment="CENTER" spacing="0" style="-fx-background-color:white;-fx-padding:16 30;-fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                  <Circle fx:id="cercle1" radius="16" fill="#4361EE"/>
+                  <Label text="1" style="-fx-font-weight:bold;-fx-text-fill:white;-fx-font-size:11px;" translateX="-16" translateY="0"/>
+                  <Label text="Période" style="-fx-font-size:11px;-fx-font-weight:bold;-fx-text-fill:#4361EE;" translateX="-8"/>
+                  <Rectangle fx:id="ligne1" width="60" height="3" fill="#7B83C4"/>
+                  <Circle fx:id="cercle2" radius="16" fill="#7B83C4"/>
+                  <Label fx:id="label2" text="2  Horaires" style="-fx-font-size:11px;-fx-font-weight:bold;-fx-text-fill:#7B83C4;" translateX="-8"/>
+                  <Rectangle fx:id="ligne2" width="60" height="3" fill="#7B83C4"/>
+                  <Circle fx:id="cercle3" radius="16" fill="#7B83C4"/>
+                  <Label fx:id="label3" text="3  Classe" style="-fx-font-size:11px;-fx-font-weight:bold;-fx-text-fill:#7B83C4;" translateX="-8"/>
+                  <Rectangle fx:id="ligne3" width="60" height="3" fill="#7B83C4"/>
+                  <Circle fx:id="cercle4" radius="16" fill="#7B83C4"/>
+                  <Label fx:id="label4" text="4  Grille" style="-fx-font-size:11px;-fx-font-weight:bold;-fx-text-fill:#7B83C4;" translateX="-8"/>
+                  <Rectangle fx:id="ligne4" width="60" height="3" fill="#7B83C4"/>
+                  <Circle fx:id="cercle5" radius="16" fill="#7B83C4"/>
+                  <Label fx:id="label5" text="5  Validation" style="-fx-font-size:11px;-fx-font-weight:bold;-fx-text-fill:#7B83C4;" translateX="-8"/>
+               </HBox>
+
+               <!-- ÉTAPE 1 : TYPE ET PÉRIODE -->
+               <ScrollPane fx:id="etape1Pane" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+                  <content>
+                     <VBox spacing="25" style="-fx-padding: 30; -fx-background-color: #F8F9FF;">
+                        <Label text="Choisissez le type d'emploi du temps" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                        <HBox spacing="20">
+                           <VBox fx:id="carteHebdo" alignment="CENTER" spacing="10" prefWidth="220"
+                                 style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),6,0,0,2); -fx-cursor: hand; -fx-border-color: #4361EE; -fx-border-width: 2; -fx-border-radius: 12;">
+                              <Label text="📅" style="-fx-font-size: 36px;" />
+                              <Label text="Hebdomadaire" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+                              <Label text="1 semaine" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+                           </VBox>
+                           <VBox fx:id="carteMensuel" alignment="CENTER" spacing="10" prefWidth="220"
+                                 style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),6,0,0,2); -fx-cursor: hand; -fx-border-color: #E8EBFF; -fx-border-width: 2; -fx-border-radius: 12;">
+                              <Label text="🗓️" style="-fx-font-size: 36px;" />
+                              <Label text="Mensuel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <Label text="1 mois" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+                           </VBox>
+                           <VBox fx:id="carteSemestriel" alignment="CENTER" spacing="10" prefWidth="220"
+                                 style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),6,0,0,2); -fx-cursor: hand; -fx-border-color: #E8EBFF; -fx-border-width: 2; -fx-border-radius: 12;">
+                              <Label text="📚" style="-fx-font-size: 36px;" />
+                              <Label text="Semestriel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <Label text="6 mois" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+                           </VBox>
+                        </HBox>
+                        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="Définir la période" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                           <HBox fx:id="controleHebdo" spacing="15" alignment="CENTER_LEFT">
+                              <Label text="Semaine :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <ComboBox fx:id="semaineCombo" prefWidth="250" promptText="Choisir une semaine" />
+                              <Label text="Année :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <ComboBox fx:id="anneeCombo" prefWidth="100" />
+                           </HBox>
+                           <HBox fx:id="controleMensuel" spacing="15" alignment="CENTER_LEFT" visible="false" managed="false">
+                              <Label text="Mois :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <ComboBox fx:id="moisCombo" prefWidth="160" promptText="Choisir un mois" />
+                              <Label text="Année :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <ComboBox fx:id="anneeMoisCombo" prefWidth="100" />
+                           </HBox>
+                           <HBox fx:id="controleSemestriel" spacing="15" alignment="CENTER_LEFT" visible="false" managed="false">
+                              <Label text="Du :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <DatePicker fx:id="dateDebutPicker" prefWidth="160" />
+                              <Label text="au :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <DatePicker fx:id="dateFinPicker" prefWidth="160" />
+                           </HBox>
+                           <Label fx:id="resumePeriodeLabel" style="-fx-font-size: 13px; -fx-text-fill: #4361EE; -fx-font-weight: bold; -fx-background-color: #F8F9FF; -fx-padding: 8 12; -fx-background-radius: 6;" />
+                        </VBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <Button fx:id="etape1SuivantButton" text="Suivant →" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 30; -fx-background-radius: 8; -fx-cursor: hand;" />
+                        </HBox>
+                     </VBox>
+                  </content>
+               </ScrollPane>
+
+               <!-- ÉTAPE 1b : CONFIGURATION HORAIRES ET JOURS -->
+               <ScrollPane fx:id="etape1bPane" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;" visible="false" managed="false">
+                  <content>
+                     <VBox spacing="25" style="-fx-padding: 30; -fx-background-color: #F8F9FF;">
+                        <Label text="⚙️ Configuration de la grille horaire" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                        <Label text="Définissez les horaires et les jours qui seront affichés dans la grille de l'emploi du temps." style="-fx-font-size: 13px; -fx-text-fill: #7B83C4;" />
+
+                        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="🕐 Configuration des heures" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                           <GridPane hgap="20" vgap="12">
+                              <Label text="Heure de début :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                              <ComboBox fx:id="heureDebutGrilleCombo" prefWidth="130" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                              <Label text="(ex: 08:00)" style="-fx-text-fill: #7B83C4; -fx-font-size: 11px;" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+                              <Label text="Heure de fin :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                              <ComboBox fx:id="heureFinGrilleCombo" prefWidth="130" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                              <Label text="(ex: 18:00)" style="-fx-text-fill: #7B83C4; -fx-font-size: 11px;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+                              <Label text="Écart entre créneaux :" style="-fx-font-weight: bold; -fx-text-fill: #1A1F3A;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                              <ComboBox fx:id="ecartHeuresCombo" prefWidth="130" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                              <Label text="heures (ex: 1h ou 2h par case)" style="-fx-text-fill: #7B83C4; -fx-font-size: 11px;" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                           </GridPane>
+
+                           <VBox spacing="5" style="-fx-background-color: #F8F9FF; -fx-padding: 12; -fx-background-radius: 8;">
+                              <Label text="📋 Aperçu des créneaux générés :" style="-fx-font-weight: bold; -fx-text-fill: #4361EE; -fx-font-size: 12px;"/>
+                              <Label fx:id="apercuCreneauxLabel" text="" style="-fx-text-fill: #1A1F3A; -fx-font-size: 12px; -fx-wrap-text: true;"/>
+                           </VBox>
+                        </VBox>
+
+                        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="📅 Jours de la semaine" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                           <Label text="Sélectionnez les jours qui apparaîtront dans la grille :" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;"/>
+
+                           <HBox spacing="10">
+                              <Button fx:id="btnLunVen" text="Lun → Ven" style="-fx-background-color: #F8F9FF; -fx-text-fill: #4361EE; -fx-background-radius: 6; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                              <Button fx:id="btnLunSam" text="Lun → Sam" style="-fx-background-color: #F8F9FF; -fx-text-fill: #4361EE; -fx-background-radius: 6; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                              <Button fx:id="btnToutDesel" text="Tout désélectionner" style="-fx-background-color: #F8F9FF; -fx-text-fill: #E53E3E; -fx-background-radius: 6; -fx-padding: 5 12; -fx-cursor: hand;"/>
+                           </HBox>
+
+                           <HBox spacing="15" alignment="CENTER_LEFT">
+                              <CheckBox fx:id="jourLundi" text="Lundi" selected="true" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                              <CheckBox fx:id="jourMardi" text="Mardi" selected="true" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                              <CheckBox fx:id="jourMercredi" text="Mercredi" selected="true" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                              <CheckBox fx:id="jourJeudi" text="Jeudi" selected="true" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                              <CheckBox fx:id="jourVendredi" text="Vendredi" selected="true" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                              <CheckBox fx:id="jourSamedi" text="Samedi" selected="false" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                           </HBox>
+
+                           <Label fx:id="apercuJoursLabel" text="" style="-fx-text-fill: #4361EE; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-color: #F8F9FF; -fx-padding: 8 12; -fx-background-radius: 6;"/>
+                        </VBox>
+
+                        <HBox alignment="CENTER_RIGHT" spacing="15">
+                           <Button fx:id="etape1bPrecedentButton" text="← Précédent" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 22; -fx-background-radius: 8; -fx-cursor: hand;" />
+                           <Button fx:id="etape1bSuivantButton" text="Suivant →" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 30; -fx-background-radius: 8; -fx-cursor: hand;" />
+                        </HBox>
+                     </VBox>
+                  </content>
+               </ScrollPane>
+
+               <!-- ÉTAPE 2 : CLASSE ET COURS -->
+               <ScrollPane fx:id="etape2Pane" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;" visible="false" managed="false">
+                  <content>
+                     <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: #F8F9FF;">
+                        <Label text="Sélectionnez la classe et les cours" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                        <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="Classe concernée" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                           <HBox spacing="15" alignment="CENTER_LEFT">
+                              <ComboBox fx:id="classeCombo" prefWidth="350" promptText="Choisir une classe..." />
+                              <Label fx:id="classeInfoLabel" text="" style="-fx-text-fill: #7B83C4; -fx-font-size: 12px;" />
+                           </HBox>
+                        </VBox>
+                        <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <HBox alignment="CENTER_LEFT" spacing="10">
+                              <Label text="Cours de la classe" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+                              <Label fx:id="nbCoursLabel" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="toutSelectButton" text="Tout sélectionner" style="-fx-background-color: #F8F9FF; -fx-text-fill: #4361EE; -fx-background-radius: 5; -fx-padding: 5 12; -fx-font-weight: bold;" />
+                              <Button fx:id="toutDeselButton" text="Tout désélectionner" style="-fx-background-color: #F8F9FF; -fx-text-fill: #E53E3E; -fx-background-radius: 5; -fx-padding: 5 12; -fx-font-weight: bold;" />
+                           </HBox>
+                           <TableView fx:id="coursTable" prefHeight="450">
+                              <columns>
+                                 <TableColumn fx:id="coursSelectCol" text="" prefWidth="40" />
+                                 <TableColumn fx:id="coursTypeCol" text="Type" prefWidth="70" />
+                                 <TableColumn fx:id="coursMatiereCol" text="Matière" prefWidth="200" />
+                                 <TableColumn fx:id="coursEnseignantCol" text="Enseignant" prefWidth="180" />
+                                 <TableColumn fx:id="coursVolumeCol" text="Volume (h)" prefWidth="90" />
+                                 <TableColumn fx:id="coursGroupesCol" text="Groupes" prefWidth="100" />
+                              </columns>
+                              <placeholder>
+                                 <Label text="Sélectionnez une classe pour voir ses cours" style="-fx-text-fill: #7B83C4; -fx-font-size: 13px;" />
+                              </placeholder>
+                           </TableView>
+                        </VBox>
+                        <HBox alignment="CENTER_RIGHT" spacing="15">
+                           <Button fx:id="etape2PrecedentButton" text="← Précédent" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 22; -fx-background-radius: 8;" />
+                           <Button fx:id="etape2SuivantButton" text="Suivant →" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 30; -fx-background-radius: 8;" />
+                        </HBox>
+                     </VBox>
+                  </content>
+               </ScrollPane>
+
+               <!-- ÉTAPE 3 : GRILLE EDT -->
+               <VBox fx:id="etape3Pane" spacing="10" style="-fx-padding: 15; -fx-background-color: #F8F9FF;" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                  <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 12 18; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                     <Label fx:id="grilleClasseLabel" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+                     <Label fx:id="grillePeriodeLabel" style="-fx-font-size: 13px; -fx-text-fill: #7B83C4;" />
+                     <Label fx:id="grilleConfigLabel" style="-fx-font-size: 12px; -fx-text-fill: #2DC653; -fx-font-weight: bold;" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label text="💡 Double-clic sur une case pour placer un cours" style="-fx-font-size: 12px; -fx-text-fill: #7B83C4;" />
+                  </HBox>
+                  <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 8 18; -fx-background-radius: 8;">
+                     <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Rectangle width="14" height="14" fill="#4361EE" arcWidth="3" arcHeight="3" />
+                        <Label text="CM - Cours Magistral" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4361EE;" />
+                     </HBox>
+                     <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Rectangle width="14" height="14" fill="#2DC653" arcWidth="3" arcHeight="3" />
+                        <Label text="TD - Travaux Dirigés" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #2DC653;" />
+                     </HBox>
+                     <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Rectangle width="14" height="14" fill="#F4A261" arcWidth="3" arcHeight="3" />
+                        <Label text="TP - Travaux Pratiques" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #F4A261;" />
+                     </HBox>
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label fx:id="nbCreneauxLabel" style="-fx-font-size: 12px; -fx-text-fill: #2DC653; -fx-font-weight: bold;" />
+                  </HBox>
+                  <ScrollPane fx:id="grilleScrollPane" fitToWidth="false" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+                     <content>
+                        <GridPane fx:id="grilleEDT" hgap="2" vgap="2" style="-fx-background-color: #E8EBFF; -fx-padding: 2;" />
+                     </content>
+                  </ScrollPane>
+                  <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-background-color: white; -fx-padding: 12 18; -fx-background-radius: 8;">
+                     <Button fx:id="etape3PrecedentButton" text="← Précédent" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 22; -fx-background-radius: 8;" />
+                     <Button fx:id="enregistrerBrouillonButton" text="💾 Enregistrer brouillon" style="-fx-background-color: #F4A261; -fx-text-fill: #1A1F3A; -fx-font-size: 13px; -fx-padding: 10 20; -fx-background-radius: 8;" />
+                     <Button fx:id="etape3SuivantButton" text="Valider →" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 30; -fx-background-radius: 8;" />
+                  </HBox>
+               </VBox>
+
+               <!-- ÉTAPE 4 : VALIDATION -->
+               <ScrollPane fx:id="etape4Pane" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;" visible="false" managed="false">
+                  <content>
+                     <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: #F8F9FF;">
+                        <Label text="Validation et envoi de l'emploi du temps" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;" />
+
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="📝 Titre de l'emploi du temps *" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                           <TextField fx:id="titreEdtField" promptText="Ex: Emploi du temps L2 Info - Semestre 1" style="-fx-padding: 10; -fx-font-size: 14px; -fx-background-radius: 7; -fx-border-color: #E8EBFF; -fx-border-width: 1; -fx-border-radius: 7;"/>
+                           <Label text="⚠️ Le titre est obligatoire" style="-fx-text-fill: #F4A261; -fx-font-size: 11px;"/>
+                        </VBox>
+
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="📊 Résumé" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                           <GridPane hgap="20" vgap="8">
+                              <Label text="Classe :" style="-fx-font-weight: bold; -fx-text-fill: #7B83C4;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                              <Label fx:id="resumeClasseLabel" text="" style="-fx-text-fill: #1A1F3A;" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                              <Label text="Type :" style="-fx-font-weight: bold; -fx-text-fill: #7B83C4;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                              <Label fx:id="resumeTypeLabel" text="" style="-fx-text-fill: #1A1F3A;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                              <Label text="Période :" style="-fx-font-weight: bold; -fx-text-fill: #7B83C4;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                              <Label fx:id="resumePeriodeLabel2" text="" style="-fx-text-fill: #1A1F3A;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                              <Label text="Créneaux :" style="-fx-font-weight: bold; -fx-text-fill: #7B83C4;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                              <Label fx:id="resumeCreneauxLabel" text="" style="-fx-text-fill: #4361EE; -fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                              <Label text="Configuration :" style="-fx-font-weight: bold; -fx-text-fill: #7B83C4;" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                              <Label fx:id="resumeConfigLabel" text="" style="-fx-text-fill: #2DC653; -fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                           </GridPane>
+                        </VBox>
+
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="🔍 Vérification des conflits" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                           <HBox spacing="10" alignment="CENTER_LEFT">
+                              <Button fx:id="verifierConflitsButton" text="🔍 Vérifier les conflits" style="-fx-background-color: #4361EE; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 9 20; -fx-background-radius: 7; -fx-cursor: hand;"/>
+                              <Label fx:id="conflitsStatusLabel" text="" style="-fx-font-weight: bold;"/>
+                           </HBox>
+                           <TextArea fx:id="conflitsDetailArea" prefHeight="120" wrapText="true" editable="false" visible="false" managed="false" style="-fx-font-size: 12px; -fx-background-radius: 7; -fx-border-color: #E8EBFF;"/>
+                        </VBox>
+
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.06),4,0,0,2);">
+                           <Label text="📧 Envoi des notifications" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1A1F3A;"/>
+                           <Label text="Des emails de notification seront envoyés aux destinataires sélectionnés." style="-fx-text-fill: #7B83C4; -fx-font-size: 12px;"/>
+                           <HBox spacing="20">
+                              <CheckBox fx:id="envoyerEtudiantsCheck" text="Notifier les étudiants de la classe" selected="true" style="-fx-font-size: 13px;"/>
+                              <CheckBox fx:id="envoyerProfsCheck" text="Notifier les enseignants concernés" selected="true" style="-fx-font-size: 13px;"/>
+                           </HBox>
+                           <Label fx:id="destinatairesLabel" text="" style="-fx-text-fill: #7B83C4; -fx-font-size: 12px;"/>
+                        </VBox>
+
+                        <HBox alignment="CENTER_RIGHT" spacing="15">
+                           <Button fx:id="etape4PrecedentButton" text="← Précédent" style="-fx-background-color: #7B83C4; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 22; -fx-background-radius: 8;"/>
+                           <ProgressIndicator fx:id="chargementIndicator" maxWidth="30" maxHeight="30" visible="false"/>
+                           <Button fx:id="validerEdtButton" text="✅ Créer et valider l'emploi du temps" style="-fx-background-color: #2DC653; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                        </HBox>
+                     </VBox>
+                  </content>
+               </ScrollPane>
+
+            </VBox>
+         </center>
+      </BorderPane>
+   </content>
+</ScrollPane>
