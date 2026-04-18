@@ -98,17 +98,23 @@ db.password=VOTRE_MOT_DE_PASSE
 
 ### 4. Compilation et Exécution
 
-Avec Maven :
+Avec Maven ou le Wrapper Maven inclus :
 
 ```bash
 # Compilation du projet
 mvn clean compile
+# ou avec le wrapper :
+# Windows : .\mvnw.cmd clean compile
+# Linux/macOS : ./mvnw clean compile
 
 # Lancement de l'application JavaFX
 mvn javafx:run
+# ou avec le wrapper :
+# Windows : .\mvnw.cmd javafx:run
+# Linux/macOS : ./mvnw javafx:run
 ```
 
-Sous Windows, vous pouvez également double-cliquer sur le fichier :
+Sous Windows, vous pouvez également lancer directement le script automatisé :
 
 ```text
 lancer_app.bat
